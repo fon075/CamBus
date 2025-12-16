@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CamBus SignIn</title>
+    <link rel="stylesheet" href="/fontawesome-free-7.1.0-web/css/all.min.css">
+</head>
+<style>
+    *{
+        box-sizing: border-box;
+    }
+    body{
+        background: #eef4ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    form{
+        padding: 25px;
+        width: 320px;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        background: white;
+    }
+    .header{
+        text-align: center;
+        margin-bottom: 20px;
+        .fa-solid{
+            color: #007bff;
+        }
+    }
+    .form-body label{
+        font-size: 15px;
+        margin-bottom: 5px;
+        display: block;
+    }
+    .form-body input{
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .form-end a{
+        text-decoration: none;
+    }
+    .form-end .submit-btn{
+        width: 100%;
+        padding: 10px;
+        border: none;
+        color: white;
+        background-color: #007bff;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+</style>
+<body>
+    <form action="/login" method="POST" id="loginForm">
+        <div class="form-body">
+            <div class="header">
+                <h1 class="logo">Cam<i class="fa-solid fa-bus"></i>Bus</h1>
+                <h3>Login form</h3>
+            </div>
+            <div class="form-field">
+                <label>Email</label>
+                <input type="text" name="email" id="email" placeholder="name@gmail.com">
+            </div>
+            <div class="form-field">
+                <label>Password</label>
+                <input type="text" name="password" id="password">
+            </div>
+        </div>
+        <div class="form-end">
+            <p>Don't have an account yet? <a href="/signup.html">Sign Up</a></p>
+            <input type="submit" id="submit-btn" class="submit-btn">
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (result.redirect) {
+                    localStorage.setItem('name', result.name);
+                    localStorage.setItem('email', result.email);
+                    window.location.href = result.redirect;
+                } else {
+                    alert('Invalid email or password');
+                }
+            } catch (error) {
+                console.error('Error logging in:', error);
+                alert('Error logging in. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
