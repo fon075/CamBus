@@ -1,78 +1,62 @@
-import express from "express";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-import mysql from "mysql2";
-import bodyParser from "body-parser";
-import cors from "cors";
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+require('dotenv').config();
 
 const app = express();
-const PORT = 3030;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
+// Middleware
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "cambus",
-});
+// Import routes
+const authRoutes = require('./cambus-backend/src/routes/auth.routes');
+const routesRoutes = require('./cambus-backend/src/routes/routes.routes');
+const busesRoutes = require('./cambus-backend/src/routes/buses.routes');
+const operatorRoutes = require('./cambus-backend/src/routes/bus-operators.routes');
+const schedulesRoutes = require('./cambus-backend/src/routes/schedules.routes');
+const bookingsRoutes = require('./cambus-backend/src/routes/bookings.routes');
+const seatsRoutes = require('./cambus-backend/src/routes/seats.routes');
+const messagesRoutes = require('./cambus-backend/src/routes/messages.routes');
+const adminRoutes = require('./cambus-backend/src/routes/admin.routes');
 
-// Static routes
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-app.get("/signup", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "signup.html"));
-});
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
+// Error handler middleware
+const errorHandler = require('./cambus-backend/src/middleware/errorHandler');
 
-// User registration
-app.post("/signup", async (req, res) => {
-  const { name, phone, email, password} = req.body;
-  const insert = "INSERT INTO users (name, phone, email, password) VALUES (?,?,?,?)";
-  db.query(insert, [name, phone, email, password], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Error inserting into database");
-    }
-    res.json({ redirect: "/", name, email });
+// Health check
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'CamBus API is running!',
+    version: '1.0.0',
+    timestamp: new Date().toISOString()
   });
 });
 
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).send("Email and password are required");
-  }
-  const sql = "SELECT * FROM users WHERE email = ?";
-  db.query(sql, [email], async (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Database error, try again later");
-    }
-    if (result.length > 0) {
-      if (password === result[0].password) {
-        return res.json({
-          redirect: "/",
-          name: result[0].name,
-          email: result[0].email,
-        });
-      } else {
-        res.status(401).send("Invalid email or password");
-      }
-    } else {
-      res.status(401).send("Invalid email or password");
-    }
-  });
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/routes', routesRoutes);
+app.use('/api/buses', busesRoutes);
+app.use('/api/bus-operators', operatorRoutes);
+app.use('/api/schedules', schedulesRoutes);
+app.use('/api/bookings', bookingsRoutes);
+app.use('/api/seats', seatsRoutes);
+app.use('/api/messages', messagesRoutes);
+app.use('/api/admin', adminRoutes);
+
+// Error handling
+app.use(errorHandler);
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
 });
 
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server has started on http://localhost:${PORT}`);
+  console.log(`🚀 CamBus API Server running on port ${PORT}`);
 });
+
