@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,46 +8,54 @@
     <link rel="stylesheet" href="/fontawesome-free-7.1.0-web/css/all.min.css">
 </head>
 <style>
-    *{
+    * {
         box-sizing: border-box;
     }
-    body{
+
+    body {
         background: #eef4ff;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
     }
-    form{
+
+    form {
         padding: 25px;
         width: 320px;
         border-radius: 8px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         background: white;
     }
-    .header{
+
+    .header {
         text-align: center;
         margin-bottom: 20px;
-        .fa-solid{
+
+        .fa-solid {
             color: #007bff;
         }
     }
-    .form-body label{
+
+    .form-body label {
         font-size: 15px;
         margin-bottom: 5px;
         display: block;
     }
-    .form-body input{
+
+    .form-body input {
         width: 100%;
         padding: 10px;
         margin-bottom: 15px;
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    .form-end a{
+
+    .form-end a {
         text-decoration: none;
     }
-    .form-end .submit-btn{
+
+    .form-end .submit-btn {
         width: 100%;
         padding: 10px;
         border: none;
@@ -57,6 +66,7 @@
         font-size: 16px;
     }
 </style>
+
 <body>
     <form action="/login" method="POST" id="loginForm">
         <div class="form-body">
@@ -70,7 +80,7 @@
             </div>
             <div class="form-field">
                 <label>Password</label>
-                <input type="text" name="password" id="password">
+                <input type="password" name="password" id="password">
             </div>
         </div>
         <div class="form-end">
@@ -80,29 +90,57 @@
     </form>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Basic validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            if (!password) {
+                alert('Please enter your password');
+                return;
+            }
+
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
+
             try {
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.value = 'Signing in...';
+
                 const response = await fetch('/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
+
                 const result = await response.json();
-                if (result.redirect) {
+                submitBtn.disabled = false;
+                submitBtn.value = 'Submit';
+
+                if (response.ok) {
                     localStorage.setItem('name', result.name);
                     localStorage.setItem('email', result.email);
                     window.location.href = result.redirect;
                 } else {
-                    alert('Invalid email or password');
+                    alert(result.error || 'Invalid email or password');
                 }
             } catch (error) {
                 console.error('Error logging in:', error);
-                alert('Error logging in. Please try again.');
+                document.getElementById('submit-btn').disabled = false;
+                document.getElementById('submit-btn').value = 'Submit';
+                alert('Network error. Please check your connection and try again.');
             }
         });
     </script>
 </body>
+
 </html>

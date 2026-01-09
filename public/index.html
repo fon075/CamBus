@@ -1,95 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CamBus</title>
+    <title>CamBus - Digital Bus Reservation Platform</title>
     <link rel="stylesheet" href="/fontawesome-free-7.1.0-web/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
 <style>
-    *{
+    * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
-    .navbar{
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+        overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        line-height: 1.5;
-        background: #eef4ff;
+        padding: 1.2rem 5%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+        transition: all 0.3s ease;
     }
-    .logo{
-        font-size: 1.5rem;
-        .fa-solid{
-            color: #007bff;
-        }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #1a1a1a;
+        cursor: pointer;
     }
+
+    .logo .fa-solid {
+        color: #007bff;
+        margin: 0 0.2rem;
+    }
+
     .btn {
-        padding: 0.6rem 1.2rem;
+        padding: 0.75rem 1.8rem;
         border: none;
         cursor: pointer;
-        border-radius: 5px;
-        background: #007bff;
-        color: #fff;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.95rem;
+        font-family: 'Inter', sans-serif;
     }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
     .primary {
-        background: #007bff;
-        color: #fff;
-        font-size: 15px;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
     }
+
+    .primary:hover {
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    }
+
+    /* Hero Section */
     .hero {
+        margin-top: 80px;
         text-align: center;
-        padding: 10rem 2rem;
-        height: 93vh;
-        line-height: 2.5;
-        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/sy_img15.webp);
+        padding: 10rem 5%;
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url(/sy_img15.webp);
         background-position: center;
         background-size: cover;
+        background-attachment: fixed;
         color: #fff;
-        h2{
-            font-size: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        top: -200px;
+        right: -100px;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
         }
-        p{
-            font-size: 20px;
+
+        50% {
+            transform: translateY(-20px);
         }
     }
+
+    .hero h2 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 1s ease;
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 2.5rem;
+        max-width: 700px;
+        line-height: 1.8;
+        opacity: 0.95;
+        animation: fadeInUp 1s ease 0.2s;
+        animation-fill-mode: both;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Features Section */
     .features {
-      display: flex;
-      gap: 1rem;
-      padding: 2rem;
-      justify-content: center;
-      height: 50vh;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        padding: 5rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #f8fafc;
     }
+
     .feature {
-      padding: 1.5rem;
-      background: #eef4ff;
-      border-radius: 8px;
-      width: 250px;
-      text-align: center;
+        padding: 2.5rem;
+        background: white;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
     }
+
+    .feature:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 123, 255, 0.15);
+    }
+
+    .feature i {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-bottom: 1.5rem;
+        display: block;
+    }
+
+    .feature h3 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        color: #1a1a1a;
+        font-weight: 700;
+    }
+
+    .feature p {
+        color: #64748b;
+        line-height: 1.8;
+        font-size: 0.95rem;
+    }
+
+    /* Steps Section */
     .steps {
-      padding: 5rem;
-      text-align: center;
-      line-height: 2;
-      background: #eef4ff;
-      ul li{
+        padding: 6rem 5%;
+        text-align: center;
+        background: white;
+    }
+
+    .steps h2 {
+        font-size: 2.8rem;
+        margin-bottom: 3rem;
+        color: #1a1a1a;
+        font-weight: 800;
+    }
+
+    .steps ul {
         list-style: none;
-        font-size: 20px;
-      }
+        max-width: 800px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
     }
+
+    .steps ul li {
+        font-size: 1.1rem;
+        padding: 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+        font-weight: 600;
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        transition: transform 0.3s ease;
+    }
+
+    .steps ul li:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Stats Section */
+    .stats {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 5rem 5%;
+        color: white;
+    }
+
+    .stats-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .stat-item h3 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    /* CTA Section */
     .cta {
-      background: #007bff;
-      color: #fff;
-      text-align: center;
-      padding: 3rem 2rem;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+        color: #fff;
+        text-align: center;
+        padding: 6rem 5%;
     }
+
+    .cta h2 {
+        font-size: 2.8rem;
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+    }
+
+    .cta p {
+        font-size: 1.2rem;
+        margin-bottom: 2.5rem;
+        opacity: 0.9;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-white {
+        background: white;
+        color: #007bff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-white:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Footer */
     .footer {
-      text-align: center;
-      padding: 1rem;
-      background: #007bff;
+        text-align: center;
+        padding: 2rem;
+        background: #1a1a1a;
+        color: #94a3b8;
+    }
+
+    .footer p {
+        margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero h2 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+        }
+
+        .steps h2,
+        .cta h2 {
+            font-size: 2rem;
+        }
     }
 </style>
+
 <body>
     <header class="navbar">
         <h1 class="logo">Cam<i class="fa-solid fa-bus"></i>Bus</h1>
@@ -97,38 +332,90 @@
     </header>
 
     <section class="hero">
-        <h2>Welcome to CamBus</h2>
-        <p>Book your seats in seconds. Where are you traveling today?</p>
-        <a href="/signup.html"><button class="btn primary">Join Now</button></a>
-    </section>
-<!--
-     <section class="features">
-        <div class="feature">
-            <h3>Fast</h3>
-            <p>Quick setup and easy usage</p>
-        </div>
-        <div class="feature">
-            <h3>Fast</h3>
-            <p>Quick setup and easy usage</p>
-        </div>
-        <div class="feature">
-            <h3>Fast</h3>
-            <p>Quick setup and easy usage</p>
-        </div> 
+        <h2>Travel Cameroon with Confidence</h2>
+        <p>Book your intercity bus tickets in seconds. Real-time seat selection, instant confirmation, and secure
+            digital payments - all in one platform.</p>
+        <a href="/signup.html"><button class="btn primary">Book Your Ticket Now</button></a>
     </section>
 
+    <!-- Statistics Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Bus Operators</p>
+            </div>
+            <div class="stat-item">
+                <h3>100+</h3>
+                <p>Routes Covered</p>
+            </div>
+            <div class="stat-item">
+                <h3>50K+</h3>
+                <p>Happy Travelers</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Customer Support</p>
+            </div>
+        </div>
+    </section>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature">
+            <i class="fas fa-qrcode"></i>
+            <h3>Digital E-Tickets</h3>
+            <p>Get instant e-tickets with QR codes. No more paper tickets or long queues at the station.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-chair"></i>
+            <h3>Seat Selection</h3>
+            <p>Choose your preferred seat from a real-time seat map. See exactly where you'll be sitting.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>Mobile Money</h3>
+            <p>Pay securely with Mobile Money or Orange Money. Fast, reliable, and convenient.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-bell"></i>
+            <h3>Travel Alerts</h3>
+            <p>Receive automated reminders and updates for upcoming trips via email and SMS.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-history"></i>
+            <h3>Booking History</h3>
+            <p>Access all your past and upcoming bookings in one place. Manage everything easily.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-headset"></i>
+            <h3>24/7 Support</h3>
+            <p>Get help anytime with our dedicated customer support team via chat or phone.</p>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
     <section class="steps">
-        <h2>How It Works</h2>
+        <h2>Book Your Ticket in 3 Easy Steps</h2>
         <ul>
-            <li>1. Sign up</li>
-            <li>2. Choose agency</li>
-            <li>3. Book your ticket</li>
+            <li>1. Search & Select<br><small>Enter destination, choose date & bus</small></li>
+            <li>2. Pick Your Seat<br><small>Select from interactive seat map</small></li>
+            <li>3. Pay & Travel<br><small>Pay with Mobile Money, get e-ticket</small></li>
         </ul>
     </section>
 
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Ready to Transform Your Travel Experience?</h2>
+        <p>Join thousands of travelers who have already made the switch to digital bus booking. Say goodbye to long
+            queues and hello to seamless travel.</p>
+        <a href="/signup.html"><button class="btn btn-white">Get Started Today <i
+                    class="fas fa-arrow-right"></i></button></a>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
-        <p>© 2025 MyBrand. All rights reserved</p>
+        <p>© 2026 CamBus Digital Platform. All rights reserved.</p>
     </footer>
--->
 </body>
+
 </html>

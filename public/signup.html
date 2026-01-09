@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,46 +8,54 @@
     <link rel="stylesheet" href="/fontawesome-free-7.1.0-web/css/all.min.css">
 </head>
 <style>
-    *{
+    * {
         box-sizing: border-box;
     }
-    body{
+
+    body {
         background: #eef4ff;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
     }
-    form{
+
+    form {
         padding: 25px;
         width: 320px;
         border-radius: 8px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         background: white;
     }
-    .header{
+
+    .header {
         text-align: center;
         margin-bottom: 20px;
-        .fa-solid{
+
+        .fa-solid {
             color: #007bff;
         }
     }
-    .form-body label{
+
+    .form-body label {
         font-size: 15px;
         margin-bottom: 5px;
         display: block;
     }
-    .form-body input{
+
+    .form-body input {
         width: 100%;
         padding: 10px;
         margin-bottom: 15px;
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    .form-end a{
+
+    .form-end a {
         text-decoration: none;
     }
-    .form-end .submit-btn{
+
+    .form-end .submit-btn {
         width: 100%;
         padding: 10px;
         border: none;
@@ -57,6 +66,7 @@
         font-size: 16px;
     }
 </style>
+
 <body>
     <form action="/signup" method="POST" id="user-form">
         <div class="header">
@@ -70,7 +80,7 @@
             </div>
             <div class="form-field">
                 <label>Phone</label>
-                <input type="text" name="phone" id="phone" placeholder="679608613">
+                <input type="text" name="phone" id="phone" placeholder="+2376xxxxxxx">
             </div>
             <div class="form-field">
                 <label>Email</label>
@@ -78,7 +88,7 @@
             </div>
             <div class="form-field">
                 <label>Password</label>
-                <input type="text" name="password" id="password">
+                <input type="password" name="password" id="password">
             </div>
         </div>
         <div class="form-end">
@@ -88,58 +98,84 @@
     </form>
 
     <script>
-        document.getElementById("user-form").addEventListener("submit", async function(e){
+        document.getElementById("user-form").addEventListener("submit", async function (e) {
             e.preventDefault();
 
             //get form values
             const name = document.getElementById("name").value;
             const phone = document.getElementById("phone").value;
             const email = document.getElementById("email").value;
-            const password= document.getElementById("password").value;
+            const password = document.getElementById("password").value;
 
             let isValid = true;
+
+            //validate phone number - must start with +2376 and be 13 characters
+            if (!phone.startsWith('+2376') || phone.length !== 13) {
+                alert('Phone number must start with +2376 and be exactly 13 characters (e.g., +2376xxxxxxx)');
+                isValid = false;
+            }
 
             //validate email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                showError('emailError', 'Please enter a valid email address');
+                alert('Please enter a valid email address');
                 isValid = false;
             }
 
             //validate password
-            if (password.length < 6) {
-                showError('passwordError', 'Password must be at least 6 characters');
+            const passwordRegex =
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+\-=\[\]{};':"\\|,.<>\/]).{8,}$/;
+
+            if (!passwordRegex.test(password)) {
+                alert(
+                    "Password must be at least 8 characters and include:\n" +
+                    "- Uppercase letter\n" +
+                    "- Lowercase letter\n" +
+                    "- Number\n" +
+                    "- Symbol"
+                );
                 isValid = false;
             }
 
-            if (isValid) {
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData.entries());
-                try {
-                    const submitBtn = document.querySelector('.submit-btn');
-                    submitBtn.classList.add('loading');
-                    const response = await fetch('/signup', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                    const result = await response.json();
-                    submitBtn.classList.remove('loading');
-                    if (result.redirect) {
-                        localStorage.setItem('name', data.name);
-                        localStorage.setItem('phone', data.phone);
-                        localStorage.setItem('email', data.email);
-                        window.location.href = result.redirect;
-                    } else {
-                        alert('Error signing up');
-                    }
-                } catch (error) {
-                    console.error('Error signing up:', error);
-                    document.querySelector('.submit-btn').classList.remove('loading');
-                    alert('Error signing up. Please try again.');
+            if (!isValid) return;
+
+            // Submit form if all validations pass
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const submitBtn = document.querySelector('.submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.value = 'Signing up...';
+
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                submitBtn.disabled = false;
+                submitBtn.value = 'Submit';
+
+                if (response.ok) {
+                    // Success
+                    localStorage.setItem('name', data.name);
+                    localStorage.setItem('phone', data.phone);
+                    localStorage.setItem('email', data.email);
+                    window.location.href = result.redirect;
+                } else {
+                    // Error from server
+                    alert(result.error || 'Error signing up. Please try again.');
                 }
+            } catch (error) {
+                console.error('Error signing up:', error);
+                document.querySelector('.submit-btn').disabled = false;
+                document.querySelector('.submit-btn').value = 'Submit';
+                alert('Network error. Please check your connection and try again.');
             }
         })
     </script>
 </body>
+
 </html>

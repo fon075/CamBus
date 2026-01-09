@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CamBus - Bus Search</title>
+    <link rel="stylesheet" href="/fontawesome-free-7.1.0-web/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f5f7f8;
+        color: #0d171c;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header Navigation */
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: #ffffff;
+        border-bottom: 1px solid #e7eff4;
+        padding: 0.75rem 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .logo-icon {
+        width: 2rem;
+        height: 2rem;
+        color: #0da6f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(13, 166, 242, 0.1);
+        border-radius: 0.5rem;
+    }
+
+    .logo-icon .material-symbols-outlined {
+        font-size: 1.5rem;
+    }
+
+    .logo-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: #0d171c;
+    }
+
+    .nav-menu {
+        display: none;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+        .nav-menu {
+            display: flex;
+        }
+    }
+
+    .nav-link {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #0d171c;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #0da6f2;
+    }
+
+    .user-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border-left: 1px solid #e7eff4;
+        padding-left: 1.5rem;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    .user-avatar {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background: #e2e8f0;
+        overflow: hidden;
+    }
+
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .user-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .menu-button {
+        display: block;
+        padding: 0.5rem;
+        color: #0d171c;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+        .menu-button {
+            display: none;
+        }
+    }
+
+    /* Search Section */
+    .search-section {
+        background: #ffffff;
+        padding: 1.5rem 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        border-bottom: 1px solid #e7eff4;
+    }
+
+    .search-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .search-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-end;
+    }
+
+    @media (min-width: 1024px) {
+        .search-form {
+            flex-direction: row;
+        }
+    }
+
+    .input-group {
+        flex: 1;
+        width: 100%;
+        position: relative;
+    }
+
+    .input-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #49819c;
+        margin-bottom: 0.25rem;
+        margin-left: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #49819c;
+        font-size: 1.25rem;
+    }
+
+    .form-input {
+        width: 100%;
+        height: 3rem;
+        padding-left: 3rem;
+        padding-right: 1rem;
+        background: #f5f7f8;
+        border: 1px solid #cee0e8;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+
+        border-color: transparent;
+        box-shadow: 0 0 0 2px #0da6f2;
+    }
+
+    .swap-button {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background: #f5f7f8;
+        border: 1px solid #cee0e8;
+        color: #0da6f2;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 0.25rem;
+    }
+
+    @media (min-width: 1024px) {
+        .swap-button {
+            display: flex;
+        }
+    }
+
+    .swap-button:hover {
+        background: #0da6f2;
+        color: white;
+    }
+
+    .date-input {
+        max-width: 240px;
+    }
+
+    @media (min-width: 1024px) {
+        .date-input {
+            flex: 1;
+        }
+    }
+
+    .search-button {
+        width: 100%;
+        height: 3rem;
+        padding: 0 2rem;
+        background: #0da6f2;
+        color: white;
+        font-weight: 700;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    @media (min-width: 1024px) {
+        .search-button {
+            width: auto;
+        }
+    }
+
+    .search-button:hover {
+        background: #0891d4;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Main Content */
+    .main-content {
+        flex-grow: 1;
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .content-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+        .content-grid {
+            flex-direction: row;
+        }
+    }
+
+    /* Sidebar Filters */
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+        .sidebar {
+            width: 25%;
+        }
+    }
+
+    .filter-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e7eff4;
+    }
+
+    .filter-title {
+        font-weight: 700;
+        font-size: 1.125rem;
+    }
+
+    .clear-button {
+        font-size: 0.875rem;
+        color: #0da6f2;
+        font-weight: 500;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .clear-button:hover {
+        text-decoration: underline;
+    }
+
+    .filter-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .filter-section-title {
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #49819c;
+    }
+
+    .time-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .time-card {
+        cursor: pointer;
+        border: 1px solid #cee0e8;
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        text-align: center;
+        background: #ffffff;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .time-card:hover {
+        background: rgba(13, 166, 242, 0.05);
+    }
+
+    .time-card.active {
+        background: #0da6f2;
+        color: white;
+    }
+
+    .time-icon {
+        color: #49819c;
+        font-size: 1.25rem;
+        transition: all 0.3s ease;
+    }
+
+    .time-card:hover .time-icon,
+    .time-card.active .time-icon {
+        color: #0da6f2;
+        transform: scale(1.1);
+    }
+
+    .time-card.active .time-icon {
+        color: white;
+    }
+
+    .time-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .time-range {
+        font-size: 0.625rem;
+        color: #49819c;
+    }
+
+    .checkbox-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+    }
+
+    .checkbox-item:hover .checkbox-label {
+        color: #0da6f2;
+    }
+
+    .checkbox-input {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 0.25rem;
+        border: 1px solid #d1d5db;
+        color: #0da6f2;
+        cursor: pointer;
+    }
+
+
+    .checkbox-label {
+        font-size: 0.875rem;
+        transition: color 0.3s ease;
+    }
+
+    .price-slider {
+        width: 100%;
+        height: 0.5rem;
+        background: #e7eff4;
+        border-radius: 0.5rem;
+        appearance: none;
+        cursor: pointer;
+        accent-color: #0da6f2;
+    }
+
+    .price-slider::-webkit-slider-thumb {
+        appearance: none;
+        width: 1.25rem;
+        height: 1.25rem;
+        background: #0da6f2;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .price-range {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #49819c;
+    }
+
+    .operator-list {
+        max-height: 12rem;
+        overflow-y: auto;
+        padding-right: 0.5rem;
+    }
+
+    .operator-list::-webkit-scrollbar {
+        width: 0.375rem;
+    }
+
+    .operator-list::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 0.25rem;
+    }
+
+    .operator-list::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 0.25rem;
+    }
+
+    .operator-list::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+    /* Results Section */
+    .results-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+        .results-section {
+            width: 75%;
+        }
+    }
+
+    .results-header {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+        .results-header {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+
+    .results-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .results-subtitle {
+        color: #49819c;
+        font-weight: 400;
+        font-size: 1rem;
+        margin-left: 0.25rem;
+    }
+
+    .sort-section {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .sort-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #49819c;
+    }
+
+    .sort-select {
+        background: #ffffff;
+        border: 1px solid #cee0e8;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        outline: none;
+    }
+
+
+
+    /* Bus Card */
+    .bus-card {
+        background: #ffffff;
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e7eff4;
+        transition: box-shadow 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .bus-card:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .bus-card.featured {
+        border: 1px solid rgba(13, 166, 242, 0.2);
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #0da6f2;
+        color: white;
+        font-size: 0.625rem;
+        font-weight: 700;
+        padding: 0.25rem 0.75rem;
+        border-bottom-right-radius: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .bus-card-content {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .bus-card-content {
+            flex-direction: row;
+        }
+    }
+
+    .bus-operator {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .bus-operator {
+            width: 25%;
+        }
+    }
+
+    .operator-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .operator-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.875rem;
+    }
+
+    .operator-details h4 {
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .operator-details p {
+        font-size: 0.75rem;
+        color: #49819c;
+    }
+
+    .amenities {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+        color: #49819c;
+    }
+
+    .amenities .material-symbols-outlined {
+        font-size: 1.125rem;
+    }
+
+    .bus-journey {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .bus-journey {
+            width: 50%;
+        }
+    }
+
+    .journey-times {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        margin-bottom: 0.25rem;
+    }
+
+    .journey-time {
+        text-align: left;
+    }
+
+    .journey-time.end {
+        text-align: right;
+    }
+
+    .time {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #0d171c;
+    }
+
+    .location {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #49819c;
+    }
+
+    .journey-line {
+        flex: 1;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .duration {
+        font-size: 0.75rem;
+        color: #49819c;
+        margin-bottom: 0.25rem;
+    }
+
+    .line {
+        width: 100%;
+        height: 2px;
+        background: #e7eff4;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .line-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: #9ca3af;
+    }
+
+    .line-icon {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 0 0.25rem;
+        color: #9ca3af;
+        font-size: 0.875rem;
+    }
+
+    .stop-info {
+        font-size: 0.625rem;
+        color: #49819c;
+        margin-top: 0.25rem;
+    }
+
+    .bus-pricing {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 0.75rem;
+        border-left: none;
+        padding-left: 0;
+    }
+
+    @media (min-width: 768px) {
+        .bus-pricing {
+            width: 25%;
+            border-left: 1px solid #f3f4f6;
+            padding-left: 1.5rem;
+        }
+    }
+
+    .price-info {
+        text-align: right;
+    }
+
+    .original-price {
+        display: block;
+        font-size: 0.875rem;
+        color: #49819c;
+        text-decoration: line-through;
+    }
+
+    .current-price {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #0da6f2;
+    }
+
+    .seats-available {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #10b981;
+    }
+
+    .seats-filling {
+        color: #f97316;
+    }
+
+    .select-button {
+        width: 100%;
+        padding: 0 1.5rem;
+        height: 2.5rem;
+        background: #0da6f2;
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 700;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+        .select-button {
+            width: auto;
+        }
+    }
+
+    .select-button:hover {
+        background: #0891d4;
+    }
+
+    .select-button.outline {
+        background: transparent;
+        border: 1px solid #0da6f2;
+        color: #0da6f2;
+    }
+
+    .select-button.outline:hover {
+        background: rgba(13, 166, 242, 0.05);
+    }
+
+    .bus-card-footer {
+        background: #f5f7f8;
+        padding: 0.5rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        border-top: 1px solid #e7eff4;
+    }
+
+    .footer-link {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #49819c;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: color 0.3s ease;
+        text-decoration: none;
+    }
+
+    .footer-link:hover {
+        color: #0da6f2;
+    }
+
+    .footer-link.primary {
+        color: #0da6f2;
+    }
+
+    .load-more {
+        margin-top: 1rem;
+        width: 100%;
+        padding: 0.75rem;
+        color: #0da6f2;
+        font-weight: 700;
+        border: 2px dashed rgba(13, 166, 242, 0.3);
+        border-radius: 0.75rem;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .load-more:hover {
+        background: rgba(13, 166, 242, 0.05);
+    }
+
+    /* Footer */
+    .footer {
+        background: #ffffff;
+        border-top: 1px solid #e7eff4;
+        padding: 2rem 0;
+        margin-top: auto;
+    }
+
+    .footer-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .footer-container {
+            flex-direction: row;
+        }
+    }
+
+    .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-logo .material-symbols-outlined {
+        color: #0da6f2;
+    }
+
+    .footer-brand {
+        font-weight: 700;
+        font-size: 1.125rem;
+    }
+
+    .footer-text {
+        font-size: 0.875rem;
+        color: #49819c;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .user-section {
+            display: none;
+        }
+
+        .nav-menu {
+            display: none;
+        }
+    }
+</style>
+
+<body>
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <span class="material-symbols-outlined">directions_bus</span>
+                </div>
+                <h2 class="logo-text">CamBus</h2>
+            </div>
+            <nav class="nav-menu">
+                <a class="nav-link" href="#">My Trips</a>
+                <a class="nav-link" href="#">Offers</a>
+                <a class="nav-link" href="#">Help</a>
+                <div class="user-section">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img alt="User Profile"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU5OTy7JA2b-r84ssXhJYq-KlCf-OEWP8IAH7coopUR-BLtdOC6qD-tbP6D3F2Y1ij3CNLrG30coxOYIt0DkXA75lk08Iz51bwGnVeajA1wZ51-7iAuqEMXwAmFbXJrCVjMWUzeR9KlZCfbUjUEQalSVkcp53x7Lu7kwS-ZunUUC670hfoSi2QFx0YJqRCb4IirZgXzGsVzQ0l4S7ZYLG0leIjDijc2yJAwRTcTwERjG5GDUDbeDNjBZ7875t-ruUjlgb7AjcwfALd" />
+                        </div>
+                        <span class="user-name">Jane Doe</span>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                </div>
+            </nav>
+            <button class="menu-button">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-form">
+                <div class="input-group">
+                    <label class="input-label">From</label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">my_location</span>
+                        <input class="form-input" type="text" value="Douala" />
+                    </div>
+                </div>
+                <button class="swap-button">
+                    <span class="material-symbols-outlined">swap_horiz</span>
+                </button>
+                <div class="input-group">
+                    <label class="input-label">To</label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">location_on</span>
+                        <input class="form-input" type="text" value="Yaoundé" />
+                    </div>
+                </div>
+                <div class="input-group date-input">
+                    <label class="input-label">Travel Date</label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">calendar_today</span>
+                        <input class="form-input" type="text" value="Fri, 24 Oct 2023" />
+                    </div>
+                </div>
+                <button class="search-button">
+                    <span class="material-symbols-outlined">search</span>
+                    <span>Search</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <div class="content-grid">
+            <aside class="sidebar">
+                <div class="filter-header">
+                    <h3 class="filter-title">Filters</h3>
+                    <button class="clear-button">Clear All</button>
+                </div>
+                <div class="filter-section">
+                    <h4 class="filter-section-title">Departure Time</h4>
+                    <div class="time-grid">
+                        <label class="time-card active">
+                            <input type="checkbox" style="display: none;" checked />
+                            <span class="material-symbols-outlined time-icon">wb_twilight</span>
+                            <span class="time-label">Morning</span>
+                            <span class="time-range">6am - 12pm</span>
+                        </label>
+                        <label class="time-card">
+                            <input type="checkbox" style="display: none;" />
+                            <span class="material-symbols-outlined time-icon">light_mode</span>
+                            <span class="time-label">Afternoon</span>
+                            <span class="time-range">12pm - 6pm</span>
+                        </label>
+                        <label class="time-card">
+                            <input type="checkbox" style="display: none;" />
+                            <span class="material-symbols-outlined time-icon">dark_mode</span>
+                            <span class="time-label">Evening</span>
+                            <span class="time-range">6pm - 12am</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h4 class="filter-section-title">Bus Type</h4>
+                    <div class="checkbox-list">
+                        <label class="checkbox-item">
+                            <input class="checkbox-input" type="checkbox" />
+                            <span class="checkbox-label">VIP Sleeper (24)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input class="checkbox-input" type="checkbox" checked />
+                            <span class="checkbox-label">AC Classic (14)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input class="checkbox-input" type="checkbox" />
+                            <span class="checkbox-label">Standard (8)</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h4 class="filter-section-title">Price Range</h4>
+                    <input class="price-slider" type="range" min="2000" max="25000" />
+                    <div class="price-range">
+                        <span>2,000 XAF</span>
+                        <span>25,000 XAF+</span>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h4 class="filter-section-title">Operators</h4>
+                    <div class="operator-list">
+                        <label class="checkbox-item">
+                            <input class="checkbox-input" type="checkbox" checked />
+                            <span class="checkbox-label">Finexs Voyages</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input class="checkbox-input" type="checkbox" />
+                            <span class="checkbox-label">Touristique Express</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input class="checkbox-input" type="checkbox" checked />
+                            <span class="checkbox-label">General Express</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input class="checkbox-input" type="checkbox" />
+                            <span class="checkbox-label">Buca Voyages</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="results-section">
+                <div class="results-header">
+                    <h2 class="results-title">14 Buses found <span class="results-subtitle">Douala to Yaoundé</span>
+                    </h2>
+                    <div class="sort-section">
+                        <span class="sort-label">Sort By:</span>
+                        <select class="sort-select">
+                            <option>Cheapest First</option>
+                            <option>Fastest First</option>
+                            <option>Departure (Early)</option>
+                            <option>Departure (Late)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Bus Card 1 - Featured -->
+                <div class="bus-card featured">
+                    <div class="featured-badge">Fastest</div>
+                    <div class="bus-card-content">
+                        <div class="bus-operator">
+                            <div class="operator-info">
+                                <div class="operator-logo" style="background: #dbeafe; color: #1d4ed8;">
+                                    FV
+                                </div>
+                                <div class="operator-details">
+                                    <h4>Finexs Voyages</h4>
+                                    <p>VIP Prestige</p>
+                                </div>
+                            </div>
+                            <div class="amenities">
+                                <span class="material-symbols-outlined" title="WiFi">wifi</span>
+                                <span class="material-symbols-outlined" title="Power Outlet">electrical_services</span>
+                                <span class="material-symbols-outlined" title="Water Bottle">water_drop</span>
+                                <span class="material-symbols-outlined" title="Tracking">location_on</span>
+                            </div>
+                        </div>
+                        <div class="bus-journey">
+                            <div class="journey-times">
+                                <div class="journey-time">
+                                    <span class="time">08:00</span>
+                                    <span class="location">Douala</span>
+                                </div>
+                                <div class="journey-line">
+                                    <span class="duration">4h 15m</span>
+                                    <div class="line">
+                                        <div class="line-dot"></div>
+                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
+                                        <div class="line-dot"></div>
+                                    </div>
+                                    <span class="stop-info">Non-stop</span>
+                                </div>
+                                <div class="journey-time end">
+                                    <span class="time">12:15</span>
+                                    <span class="location">Yaoundé</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bus-pricing">
+                            <div class="price-info">
+                                <span class="original-price">5,500 XAF</span>
+                                <span class="current-price">4,500 XAF</span>
+                                <span class="seats-available">12 Seats Left</span>
+                            </div>
+                            <button class="select-button">
+                                Select Seats
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bus-card-footer">
+                        <button class="footer-link primary">
+                            Amenities <span class="material-symbols-outlined"
+                                style="font-size: 0.875rem;">keyboard_arrow_down</span>
+                        </button>
+                        <button class="footer-link">
+                            Boarding & Dropping Points
+                        </button>
+                        <button class="footer-link">
+                            Cancellation Policy
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bus Card 2 -->
+                <div class="bus-card">
+                    <div class="bus-card-content">
+                        <div class="bus-operator">
+                            <div class="operator-info">
+                                <div class="operator-logo" style="background: #fef3c7; color: #a16207;">
+                                    TE
+                                </div>
+                                <div class="operator-details">
+                                    <h4>Touristique</h4>
+                                    <p>Comfort Plus</p>
+                                </div>
+                            </div>
+                            <div class="amenities">
+                                <span class="material-symbols-outlined">wifi</span>
+                                <span class="material-symbols-outlined">electrical_services</span>
+                                <span class="material-symbols-outlined">airline_seat_recline_extra</span>
+                            </div>
+                        </div>
+                        <div class="bus-journey">
+                            <div class="journey-times">
+                                <div class="journey-time">
+                                    <span class="time">09:30</span>
+                                    <span class="location">Douala</span>
+                                </div>
+                                <div class="journey-line">
+                                    <span class="duration">4h 45m</span>
+                                    <div class="line">
+                                        <div class="line-dot"></div>
+                                        <div class="line-dot"
+                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
+                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
+                                        <div class="line-dot"
+                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
+                                        <div class="line-dot"></div>
+                                    </div>
+                                    <span class="stop-info">1 Stop (Edea)</span>
+                                </div>
+                                <div class="journey-time end">
+                                    <span class="time">14:15</span>
+                                    <span class="location">Yaoundé</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bus-pricing">
+                            <div class="price-info">
+                                <span class="current-price">3,500 XAF</span>
+                                <span class="seats-available seats-filling">Filling Fast</span>
+                            </div>
+                            <button class="select-button outline">
+                                View Seats
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bus Card 3 -->
+                <div class="bus-card">
+                    <div class="bus-card-content">
+                        <div class="bus-operator">
+                            <div class="operator-info">
+                                <div class="operator-logo" style="background: #f3e8ff; color: #6b21a8;">
+                                    GE
+                                </div>
+                                <div class="operator-details">
+                                    <h4>General Express</h4>
+                                    <p>Business Class</p>
+                                </div>
+                            </div>
+                            <div class="amenities">
+                                <span class="material-symbols-outlined">wifi</span>
+                                <span class="material-symbols-outlined">airline_seat_recline_extra</span>
+                            </div>
+                        </div>
+                        <div class="bus-journey">
+                            <div class="journey-times">
+                                <div class="journey-time">
+                                    <span class="time">11:00</span>
+                                    <span class="location">Douala</span>
+                                </div>
+                                <div class="journey-line">
+                                    <span class="duration">5h 15m</span>
+                                    <div class="line">
+                                        <div class="line-dot"></div>
+                                        <div class="line-dot"
+                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
+                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
+                                        <div class="line-dot"
+                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
+                                        <div class="line-dot"></div>
+                                    </div>
+                                    <span class="stop-info">2 Stops</span>
+                                </div>
+                                <div class="journey-time end">
+                                    <span class="time">16:15</span>
+                                    <span class="location">Yaoundé</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bus-pricing">
+                            <div class="price-info">
+                                <span class="current-price">5,000 XAF</span>
+                                <span class="seats-available">20 Seats Left</span>
+                            </div>
+                            <button class="select-button outline">
+                                View Seats
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bus Card 4 -->
+                <div class="bus-card">
+                    <div class="bus-card-content">
+                        <div class="bus-operator">
+                            <div class="operator-info">
+                                <div class="operator-logo" style="background: #fee2e2; color: #991b1b;">
+                                    BV
+                                </div>
+                                <div class="operator-details">
+                                    <h4>Buca Voyages</h4>
+                                    <p>Classic</p>
+                                </div>
+                            </div>
+                            <div class="amenities">
+                                <span class="material-symbols-outlined">wifi</span>
+                            </div>
+                        </div>
+                        <div class="bus-journey">
+                            <div class="journey-times">
+                                <div class="journey-time">
+                                    <span class="time">14:00</span>
+                                    <span class="location">Douala</span>
+                                </div>
+                                <div class="journey-line">
+                                    <span class="duration">4h 30m</span>
+                                    <div class="line">
+                                        <div class="line-dot"></div>
+                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
+                                        <div class="line-dot"></div>
+                                    </div>
+                                    <span class="stop-info">Non-stop</span>
+                                </div>
+                                <div class="journey-time end">
+                                    <span class="time">18:30</span>
+                                    <span class="location">Yaoundé</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bus-pricing">
+                            <div class="price-info">
+                                <span class="current-price">4,000 XAF</span>
+                                <span class="seats-available">8 Seats Left</span>
+                            </div>
+                            <button class="select-button outline">
+                                View Seats
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="load-more">
+                    Load More Buses
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <span class="material-symbols-outlined">directions_bus</span>
+                <span class="footer-brand">CamBus</span>
+            </div>
+            <p class="footer-text">© 2026 CamBus Digital Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // State management
+        const state = {
+            from: 'Douala',
+            to: 'Yaoundé',
+            date: 'Fri, 24 Oct 2023',
+            filters: {
+                departureTime: [],
+                busType: [],
+                minPrice: 2000,
+                maxPrice: 25000,
+                operators: []
+            },
+            sortBy: 'cheapest',
+            buses: [],
+            displayLimit: 4
+        };
+
+        // DOM Elements
+        const fromInput = document.querySelector('.search-form .input-group:nth-child(1) input');
+        const toInput = document.querySelector('.search-form .input-group:nth-child(3) input');
+        const dateInput = document.querySelector('.date-input input');
+        const searchButton = document.querySelector('.search-button');
+        const swapButton = document.querySelector('.swap-button');
+        const sortSelect = document.querySelector('.sort-select');
+        const resultsSection = document.querySelector('.results-section');
+        const resultsTitle = document.querySelector('.results-title');
+        const clearAllButton = document.querySelector('.clear-button');
+        const loadMoreButton = document.querySelector('.load-more');
+        const priceSlider = document.querySelector('.price-slider');
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeFilters();
+            performSearch();
+        });
+
+        // Initialize filter event listeners
+        function initializeFilters() {
+            // Departure time filters
+            document.querySelectorAll('.time-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    const input = this.querySelector('input[type="checkbox"]');
+                    input.checked = !input.checked;
+                    this.classList.toggle('active');
+                    updateDepartureTimeFilter();
+                });
+            });
+
+            // Bus type filters
+            document.querySelectorAll('.filter-section:nth-of-type(2) .checkbox-input').forEach((checkbox, index) => {
+                const types = ['VIP Sleeper', 'AC Classic', 'Standard'];
+                checkbox.addEventListener('change', () => {
+                    updateBusTypeFilter(types[index], checkbox.checked);
+                });
+                // Initialize checked filters
+                if (checkbox.checked) {
+                    updateBusTypeFilter(types[index], true);
+                }
+            });
+
+            // Price range slider
+            priceSlider.addEventListener('input', function () {
+                state.filters.maxPrice = parseInt(this.value);
+                performSearch();
+            });
+
+            // Operator filters
+            document.querySelectorAll('.operator-list .checkbox-input').forEach((checkbox, index) => {
+                const operators = ['Finexs Voyages', 'Touristique Express', 'General Express', 'Buca Voyages'];
+                checkbox.addEventListener('change', () => {
+                    updateOperatorFilter(operators[index], checkbox.checked);
+                });
+                // Initialize checked filters
+                if (checkbox.checked) {
+                    updateOperatorFilter(operators[index], true);
+                }
+            });
+
+            // Sort select
+            sortSelect.addEventListener('change', function () {
+                const sortMap = {
+                    'Cheapest First': 'cheapest',
+                    'Fastest First': 'fastest',
+                    'Departure (Early)': 'early',
+                    'Departure (Late)': 'late'
+                };
+                state.sortBy = sortMap[this.value];
+                performSearch();
+            });
+
+            // Search button
+            searchButton.addEventListener('click', () => {
+                state.from = fromInput.value;
+                state.to = toInput.value;
+                state.date = dateInput.value;
+                state.displayLimit = 4;
+                performSearch();
+            });
+
+            // Swap button
+            swapButton.addEventListener('click', () => {
+                const temp = fromInput.value;
+                fromInput.value = toInput.value;
+                toInput.value = temp;
+                state.from = fromInput.value;
+                state.to = toInput.value;
+                performSearch();
+            });
+
+            // Clear all filters
+            clearAllButton.addEventListener('click', () => {
+                // Reset all checkboxes
+                document.querySelectorAll('.time-card').forEach(card => {
+                    card.querySelector('input[type="checkbox"]').checked = false;
+                    card.classList.remove('active');
+                });
+                document.querySelectorAll('.checkbox-input').forEach(cb => cb.checked = false);
+                priceSlider.value = 25000;
+
+                // Reset state
+                state.filters = {
+                    departureTime: [],
+                    busType: [],
+                    minPrice: 2000,
+                    maxPrice: 25000,
+                    operators: []
+                };
+                performSearch();
+            });
+
+            // Load more button
+            loadMoreButton.addEventListener('click', () => {
+                state.displayLimit += 4;
+                renderBuses(state.buses);
+            });
+        }
+
+        function updateDepartureTimeFilter() {
+            const checked = [];
+            document.querySelectorAll('.time-card input[type="checkbox"]:checked').forEach((input, index) => {
+                const times = ['morning', 'afternoon', 'evening'];
+                const timeIndex = Array.from(input.closest('.time-grid').children).indexOf(input.closest('.time-card'));
+                checked.push(times[timeIndex]);
+            });
+            state.filters.departureTime = checked;
+            performSearch();
+        }
+
+        function updateBusTypeFilter(type, checked) {
+            if (checked) {
+                if (!state.filters.busType.includes(type)) {
+                    state.filters.busType.push(type);
+                }
+            } else {
+                state.filters.busType = state.filters.busType.filter(t => t !== type);
+            }
+            performSearch();
+        }
+
+        function updateOperatorFilter(operator, checked) {
+            if (checked) {
+                if (!state.filters.operators.includes(operator)) {
+                    state.filters.operators.push(operator);
+                }
+            } else {
+                state.filters.operators = state.filters.operators.filter(o => o !== operator);
+            }
+            performSearch();
+        }
+
+        // Perform search API call
+        async function performSearch() {
+            try {
+                // Build query string
+                const params = new URLSearchParams({
+                    from: state.from,
+                    to: state.to,
+                    sortBy: state.sortBy
+                });
+
+                // Add filter parameters
+                if (state.filters.departureTime.length > 0) {
+                    state.filters.departureTime.forEach(time => {
+                        params.append('departureTime', time);
+                    });
+                }
+
+                if (state.filters.busType.length > 0) {
+                    state.filters.busType.forEach(type => {
+                        params.append('busType', type);
+                    });
+                }
+
+                if (state.filters.operators.length > 0) {
+                    state.filters.operators.forEach(op => {
+                        params.append('operators', op);
+                    });
+                }
+
+                params.append('minPrice', state.filters.minPrice);
+                params.append('maxPrice', state.filters.maxPrice);
+
+                // Fetch data
+                const response = await fetch(`/api/buses?${params.toString()}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    state.buses = data.buses;
+                    renderBuses(data.buses);
+                    updateResultsHeader(data.count);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                resultsTitle.innerHTML = `<span style="color: #ef4444;">Error loading buses. Please try again.</span>`;
+            }
+        }
+
+        function updateResultsHeader(count) {
+            resultsTitle.innerHTML = `${count} Buses found <span class="results-subtitle">${state.from} to ${state.to}</span>`;
+        }
+
+        function renderBuses(buses) {
+            // Get container (results section)
+            const container = document.querySelector('.results-section');
+
+            // Remove old bus cards
+            document.querySelectorAll('.bus-card').forEach(card => card.remove());
+            loadMoreButton.remove();
+
+            if (buses.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.style.cssText = 'padding: 3rem; text-align: center; color: #49819c;';
+                noResults.innerHTML = `
+                    <span class="material-symbols-outlined" style="font-size: 3rem; display: block; margin-bottom: 1rem; opacity: 0.5;">search_off</span>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">No buses found</h3>
+                    <p>Try adjusting your filters or search criteria</p>
+                `;
+                container.appendChild(noResults);
+                return;
+            }
+
+            // Render buses up to display limit
+            const displayBuses = buses.slice(0, state.displayLimit);
+            displayBuses.forEach((bus, index) => {
+                const card = createBusCard(bus, index === 0 && state.sortBy === 'fastest');
+                container.appendChild(card);
+            });
+
+            // Re-add load more button if there are more buses
+            if (state.displayLimit < buses.length) {
+                container.appendChild(loadMoreButton);
+                loadMoreButton.textContent = `Load More Buses (${buses.length - state.displayLimit} remaining)`;
+            } else {
+                container.appendChild(loadMoreButton);
+                loadMoreButton.textContent = 'No more buses to load';
+                loadMoreButton.style.opacity = '0.5';
+                loadMoreButton.style.cursor = 'not-allowed';
+            }
+        }
+
+        function createBusCard(bus, isFeatured = false) {
+            const card = document.createElement('div');
+            card.className = `bus-card ${isFeatured ? 'featured' : ''}`;
+
+            // Determine seats status
+            let seatsClass = 'seats-available';
+            let seatsText = `${bus.seatsAvailable} Seats Left`;
+            if (bus.seatsAvailable < 10) {
+                seatsClass = 'seats-available seats-filling';
+                seatsText = 'Filling Fast';
+            }
+
+            // Create journey line with stops
+            let lineDots = `<div class="line-dot"></div>`;
+            if (bus.stops > 0) {
+                lineDots = `<div class="line-dot"></div>`;
+                for (let i = 0; i < bus.stops; i++) {
+                    lineDots += `<div class="line-dot" style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>`;
+                }
+                lineDots += `<div class="line-dot"></div>`;
+            } else {
+                lineDots = `<div class="line-dot"></div><div class="line-dot"></div>`;
+            }
+
+            card.innerHTML = `
+                ${isFeatured ? '<div class="featured-badge">Fastest</div>' : ''}
+                <div class="bus-card-content">
+                    <div class="bus-operator">
+                        <div class="operator-info">
+                            <div class="operator-logo" style="background: ${bus.operatorColor}; color: ${bus.operatorTextColor};">
+                                ${bus.operatorShort}
+                            </div>
+                            <div class="operator-details">
+                                <h4>${bus.operator}</h4>
+                                <p>${bus.busType}</p>
+                            </div>
+                        </div>
+                        <div class="amenities">
+                            ${bus.amenities.map(amenity => `<span class="material-symbols-outlined" title="${amenity}">${amenity}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="bus-journey">
+                        <div class="journey-times">
+                            <div class="journey-time">
+                                <span class="time">${bus.departureTime}</span>
+                                <span class="location">${bus.from}</span>
+                            </div>
+                            <div class="journey-line">
+                                <span class="duration">${bus.duration}</span>
+                                <div class="line">
+                                    ${lineDots}
+                                    <span class="material-symbols-outlined line-icon">directions_bus</span>
+                                </div>
+                                <span class="stop-info">${bus.stopDetails}</span>
+                            </div>
+                            <div class="journey-time end">
+                                <span class="time">${bus.arrivalTime}</span>
+                                <span class="location">${bus.to}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bus-pricing">
+                        <div class="price-info">
+                            ${bus.originalPrice ? `<span class="original-price">${bus.originalPrice.toLocaleString()} XAF</span>` : ''}
+                            <span class="current-price">${bus.price.toLocaleString()} XAF</span>
+                            <span class="${seatsClass}">${seatsText}</span>
+                        </div>
+                        <button class="select-button ${bus.originalPrice ? '' : 'outline'}">
+                            ${bus.originalPrice ? 'Select Seats' : 'View Seats'}
+                        </button>
+                    </div>
+                </div>
+                <div class="bus-card-footer">
+                    <button class="footer-link primary" onclick="toggleAmenities(this)">
+                        Amenities <span class="material-symbols-outlined" style="font-size: 0.875rem;">keyboard_arrow_down</span>
+                    </button>
+                    <button class="footer-link">
+                        Boarding & Dropping Points
+                    </button>
+                    <button class="footer-link">
+                        Cancellation Policy
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Toggle amenities section (expandable)
+        function toggleAmenities(button) {
+            const icon = button.querySelector('.material-symbols-outlined');
+            if (icon.textContent === 'keyboard_arrow_down') {
+                icon.textContent = 'keyboard_arrow_up';
+                button.style.fontWeight = '600';
+            } else {
+                icon.textContent = 'keyboard_arrow_down';
+                button.style.fontWeight = '500';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
