@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seat Selection - BusBooker</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c35",
+                        "border-light": "#e7eff4",
+                        "border-dark": "#2a3e4a",
+                        "text-main": "#0d171c",
+                        "text-sub": "#49819c",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-gray-100 min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 w-full bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 lg:px-10 py-3 shadow-sm">
+<div class="max-w-7xl mx-auto flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined filled text-2xl">directions_bus</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">BusBooker</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">My Bookings</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20 cursor-pointer" data-alt="User profile avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtswGbW-Rgpnmxkq2vSLfgdxjMtcHzxF6XFfC2ukr3RqIgVquunnanBPhT5jQ74JKjCoG9KDnFGP6SBWrCqD7b07kA7m_IRB47nqMh2sq19wBgzf-APJrXQ4FWXFN1xlrNlOYxafOcWX7iE7KXS3FrsqHTdGnsIVM2GdwsxoLyTtio5ZBXrU6WqEEm9ENTz-x0TbK3_vScx-nD_Zfr0uMex16xHoqPdNe6sTpNXUJUqqzZsUeVj9yC-VkA-y4zYDLvDgH87MD4wNSG");'>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 lg:px-10 py-8">
+<div class="flex flex-col lg:flex-row gap-8 items-start">
+<div class="flex-1 w-full flex flex-col gap-6">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-border-light dark:border-border-dark shadow-sm">
+<div class="flex flex-wrap justify-between gap-4 items-center">
+<div class="flex flex-col gap-1">
+<h1 class="text-2xl md:text-[32px] font-bold leading-tight text-text-main dark:text-white">Yaoundé <span class="text-gray-400 dark:text-gray-500 mx-2">→</span> Douala</h1>
+<div class="flex items-center gap-2 text-text-sub dark:text-gray-400 text-sm font-medium">
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider">Finexs Voyages</span>
+<span class="mx-1">•</span>
+<span class="material-symbols-outlined text-base">calendar_month</span>
+<span>Fri, 12 Oct</span>
+<span class="mx-1">•</span>
+<span class="material-symbols-outlined text-base">schedule</span>
+<span>10:00 AM</span>
+<span class="mx-1">•</span>
+<span>VIP AC Bus</span>
+</div>
+</div>
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary/10 hover:bg-primary/20 text-primary text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-base mr-2">search</span>
+                            Modify Search
+                        </button>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 border border-border-light dark:border-border-dark shadow-sm">
+<h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Seat Legend</h3>
+<div class="flex gap-4 flex-wrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded border border-gray-300 dark:border-gray-500 bg-white dark:bg-transparent"></div>
+<span class="text-sm font-medium">Available</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary border border-primary"></div>
+<span class="text-sm font-medium">Selected</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-gray-200 dark:bg-gray-700 border border-gray-200 dark:border-gray-700 opacity-50 relative overflow-hidden">
+<span class="absolute inset-0 flex items-center justify-center text-gray-400">✕</span>
+</div>
+<span class="text-sm font-medium">Booked</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded border border-pink-400 bg-pink-50 dark:bg-pink-900/20 text-pink-500"></div>
+<span class="text-sm font-medium">Ladies Only</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 md:p-10 border border-border-light dark:border-border-dark shadow-sm relative overflow-hidden">
+<div class="flex justify-between items-center mb-8 border-b border-border-light dark:border-border-dark pb-4">
+<h3 class="text-lg font-bold">Main Deck</h3>
+<div class="flex items-center gap-2 text-gray-400">
+<span class="text-xs uppercase font-bold tracking-widest">Front</span>
+<span class="material-symbols-outlined text-3xl rotate-[-90deg]">steering_wheel_heat</span>
+</div>
+</div>
+<div class="relative w-full max-w-[500px] mx-auto bg-white dark:bg-[#15232b] rounded-t-[3rem] rounded-b-lg border-2 border-gray-200 dark:border-gray-700 p-6 shadow-inner">
+<div class="absolute top-6 right-6 opacity-20">
+<span class="material-symbols-outlined text-4xl">airline_seat_recline_extra</span>
+</div>
+<div class="mt-16 flex flex-col gap-4">
+<div class="grid grid-cols-5 gap-3 items-center">
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg bg-gray-200 dark:bg-gray-700 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-400 dark:text-gray-500">1A</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg bg-gray-200 dark:bg-gray-700 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-400 dark:text-gray-500">1B</span>
+</button>
+<div class="text-center text-xs text-gray-300 font-mono tracking-widest rotate-90">AISLE</div>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">1C</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">1D</span>
+</button>
+</div>
+<div class="grid grid-cols-5 gap-3 items-center">
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg bg-primary text-white shadow-md ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-[#15232b]">
+<span class="material-symbols-outlined filled text-2xl">chair</span>
+<span class="text-xs font-bold">2A</span>
+<div class="absolute -top-1 -right-1 bg-white text-primary rounded-full p-[2px]">
+<span class="material-symbols-outlined text-[10px] font-bold">check</span>
+</div>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg bg-primary text-white shadow-md ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-[#15232b]">
+<span class="material-symbols-outlined filled text-2xl">chair</span>
+<span class="text-xs font-bold">2B</span>
+<div class="absolute -top-1 -right-1 bg-white text-primary rounded-full p-[2px]">
+<span class="material-symbols-outlined text-[10px] font-bold">check</span>
+</div>
+</button>
+<div></div>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-pink-400 bg-pink-50 dark:bg-pink-900/10 hover:bg-pink-100 transition-all">
+<span class="material-symbols-outlined text-pink-500 text-2xl">chair</span>
+<span class="text-xs font-bold text-pink-600">2C</span>
+<span class="absolute top-1 right-1 text-[10px] text-pink-500 material-symbols-outlined">female</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">2D</span>
+</button>
+</div>
+<div class="grid grid-cols-5 gap-3 items-center">
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">3A</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">3B</span>
+</button>
+<div></div>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">3C</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">3D</span>
+</button>
+</div>
+<div class="grid grid-cols-5 gap-3 items-center">
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">4A</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">4B</span>
+</button>
+<div></div>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">4C</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">4D</span>
+</button>
+</div>
+<div class="grid grid-cols-5 gap-3 items-center">
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">5A</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">5B</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">5M</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">5C</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center w-full aspect-square rounded-lg border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors text-2xl">chair</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:text-primary">5D</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-96 flex-shrink-0 lg:sticky lg:top-24">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-lg overflow-hidden flex flex-col">
+<div class="p-6 border-b border-border-light dark:border-border-dark bg-primary/5">
+<h2 class="text-lg font-bold text-text-main dark:text-white mb-1">Booking Summary</h2>
+<p class="text-sm text-text-sub flex justify-between">
+<span>Review your trip details</span>
+<span class="font-semibold text-primary">Finexs Voyages</span>
+</p>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<div class="relative pl-6 space-y-6 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-primary before:to-gray-300 dark:before:to-gray-600">
+<div class="relative">
+<div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full border-2 border-primary bg-surface-light dark:bg-surface-dark"></div>
+<p class="text-xs font-bold text-gray-500 uppercase tracking-wide">Boarding Point</p>
+<p class="font-medium text-text-main dark:text-white">Mvan Station, Yaoundé</p>
+<p class="text-xs text-text-sub">10:00 AM</p>
+</div>
+<div class="relative">
+<div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full border-2 border-gray-400 bg-gray-400"></div>
+<p class="text-xs font-bold text-gray-500 uppercase tracking-wide">Dropping Point</p>
+<p class="font-medium text-text-main dark:text-white">Akwa, Douala</p>
+<p class="text-xs text-text-sub">02:30 PM</p>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<p class="text-sm font-semibold text-text-main dark:text-white">Selected Seats (2)</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 rounded bg-primary text-white text-sm font-bold shadow-sm">2A</span>
+<span class="px-3 py-1 rounded bg-primary text-white text-sm font-bold shadow-sm">2B</span>
+</div>
+</div>
+<div class="bg-background-light dark:bg-background-dark/50 rounded-lg p-4 space-y-3">
+<div class="flex justify-between text-sm">
+<span class="text-text-sub">Seat 2A</span>
+<span class="font-medium text-text-main dark:text-white">4,000 XAF</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-text-sub">Seat 2B</span>
+<span class="font-medium text-text-main dark:text-white">4,000 XAF</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-text-sub">Tax &amp; Fees</span>
+<span class="font-medium text-text-main dark:text-white">500 XAF</span>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-600 pt-3 flex justify-between items-end">
+<span class="font-bold text-lg text-text-main dark:text-white">Total</span>
+<span class="font-bold text-2xl text-primary">8,500 XAF</span>
+</div>
+</div>
+</div>
+<div class="p-6 bg-background-light dark:bg-background-dark/30 border-t border-border-light dark:border-border-dark">
+<button class="w-full py-3 px-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                            Proceed to Payment
+                            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+<button class="w-full mt-3 py-2 text-sm text-text-sub hover:text-text-main font-medium text-center">
+                            Back to Search
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

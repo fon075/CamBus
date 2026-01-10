@@ -1124,7 +1124,7 @@
     </footer>
 
     <script>
-        // State management
+
         const state = {
             from: 'Douala',
             to: 'Yaoundé',
@@ -1141,7 +1141,7 @@
             displayLimit: 4
         };
 
-        // DOM Elements
+
         const fromInput = document.querySelector('.search-form .input-group:nth-child(1) input');
         const toInput = document.querySelector('.search-form .input-group:nth-child(3) input');
         const dateInput = document.querySelector('.date-input input');
@@ -1154,7 +1154,7 @@
         const loadMoreButton = document.querySelector('.load-more');
         const priceSlider = document.querySelector('.price-slider');
 
-        // Debounce helper
+
         function debounce(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -1167,13 +1167,13 @@
             };
         }
 
-        // Initialize on page load
+
         document.addEventListener('DOMContentLoaded', () => {
             initializeFilters();
             performSearch();
         });
 
-        // Initialize filter event listeners
+
         function initializeFilters() {
             // Departure time filters
             document.querySelectorAll('.time-card').forEach(card => {
@@ -1291,7 +1291,7 @@
             performSearch();
         }
 
-        // Perform search API call
+
         async function performSearch() {
             const loadingSpinner = document.getElementById('loading-spinner');
             const container = document.getElementById('bus-results-container');
@@ -1482,7 +1482,7 @@
             return card;
         }
 
-        // Toggle amenities section (expandable)
+
         function toggleAmenities(button) {
             const icon = button.querySelector('.material-symbols-outlined');
             if (icon.textContent === 'keyboard_arrow_down') {

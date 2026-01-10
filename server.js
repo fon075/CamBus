@@ -15,7 +15,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// First connect without database to create it if needed
 const dbInit = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -24,23 +23,20 @@ const dbInit = mysql.createConnection({
 
 dbInit.connect((err) => {
   if (err) {
-    console.error("❌ MySQL connection failed:", err.message);
-    console.error("Please make sure MySQL is running.");
+    console.error("MySQL connection failed:", err.message);
     process.exit(1);
   }
 
-  // Create database if it doesn't exist
   dbInit.query("CREATE DATABASE IF NOT EXISTS cambus", (err) => {
     if (err) {
-      console.error("❌ Error creating database:", err.message);
+      console.error("Error creating database:", err.message);
       process.exit(1);
     }
-    console.log("✅ Database 'cambus' ready");
+    console.log("Database 'cambus' ready");
     dbInit.end();
   });
 });
 
-// Now connect to the cambus database
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -50,12 +46,11 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error("❌ Database connection failed:", err.message);
+    console.error("Database connection failed:", err.message);
     process.exit(1);
   }
-  console.log("✅ Connected to cambus database");
+  console.log("Connected to cambus database");
 
-  // Create users table if it doesn't exist
   const createUsersTable = `
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -68,14 +63,9 @@ db.connect((err) => {
   `;
 
   db.query(createUsersTable, (err) => {
-    if (err) {
-      console.error("❌ Error creating users table:", err.message);
-    } else {
-      console.log("✅ Users table ready");
-    }
+    if (err) console.error("Error creating users table:", err.message);
   });
 
-  // Create buses table if it doesn't exist
   const createBusesTable = `
     CREATE TABLE IF NOT EXISTS buses (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -103,14 +93,9 @@ db.connect((err) => {
   `;
 
   db.query(createBusesTable, (err) => {
-    if (err) {
-      console.error("❌ Error creating buses table:", err.message);
-    } else {
-      console.log("✅ Buses table ready");
-    }
+    if (err) console.error("Error creating buses table:", err.message);
   });
 
-  // Create operators table if it doesn't exist
   const createOperatorsTable = `
     CREATE TABLE IF NOT EXISTS operators (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -123,14 +108,9 @@ db.connect((err) => {
   `;
 
   db.query(createOperatorsTable, (err) => {
-    if (err) {
-      console.error("❌ Error creating operators table:", err.message);
-    } else {
-      console.log("✅ Operators table ready");
-    }
+    if (err) console.error("Error creating operators table:", err.message);
   });
 
-  // Create customer_support table if it doesn't exist
   const createSupportTable = `
     CREATE TABLE IF NOT EXISTS customer_support (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -144,15 +124,25 @@ db.connect((err) => {
   `;
 
   db.query(createSupportTable, (err) => {
-    if (err) {
-      console.error("❌ Error creating support table:", err.message);
-    } else {
-      console.log("✅ Customer support table ready");
-    }
+    if (err) console.error("Error creating support table:", err.message);
+  });
+
+  const createFeedbackTable = `
+    CREATE TABLE IF NOT EXISTS feedback (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_email VARCHAR(255) NOT NULL,
+      type VARCHAR(50) NOT NULL,
+      subject VARCHAR(255) NOT NULL,
+      message TEXT NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  db.query(createFeedbackTable, (err) => {
+    if (err) console.error("Error creating feedback table:", err.message);
   });
 });
 
-// Static routes
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -166,59 +156,49 @@ app.get("/operator", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "operator.html"));
 });
 
-// User registration
 app.post("/signup", (req, res) => {
   const { name, phone, email, password } = req.body;
 
-  // Server-side validation
   if (!name || !phone || !email || !password) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  // Validate phone number: must start with +2376 and be 13 characters
   if (!phone.startsWith('+2376') || phone.length !== 13) {
     return res.status(400).json({
       error: "Phone number must start with +2376 and be exactly 13 characters"
     });
   }
 
-  // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({ error: "Invalid email format" });
   }
 
-  // Check if email already exists
   const checkEmail = "SELECT id FROM users WHERE email = ?";
   db.query(checkEmail, [email], (err, results) => {
     if (err) {
-      console.error("Database error:", err);
+      console.error(err);
       return res.status(500).json({ error: "Database error" });
     }
 
     if (results.length > 0) {
-      return res.status(400).json({
-        error: "Email already exists"
-      });
+      return res.status(400).json({ error: "Email already exists" });
     }
 
-    // Email doesn't exist, proceed with insert
     const insert = "INSERT INTO users (name, phone, email, password) VALUES (?,?,?,?)";
     db.query(insert, [name, phone, email, password], (err, result) => {
       if (err) {
-        console.error("Database insert error:", err);
+        console.error(err);
         return res.status(500).json({ error: "Error creating account" });
       }
-      res.json({ redirect: "/", name, email });
+      res.json({ redirect: "/user-dashboard.html", name, email });
     });
   });
 });
 
-// User login
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  // Validate input
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
@@ -226,14 +206,14 @@ app.post("/login", (req, res) => {
   const sql = "SELECT * FROM users WHERE email = ?";
   db.query(sql, [email], (err, result) => {
     if (err) {
-      console.error("Database error:", err);
-      return res.status(500).json({ error: "Database error, try again later" });
+      console.error(err);
+      return res.status(500).json({ error: "Database error" });
     }
 
     if (result.length > 0) {
       if (password === result[0].password) {
         return res.json({
-          redirect: "/",
+          redirect: "/user-dashboard.html",
           name: result[0].name,
           email: result[0].email,
         });
@@ -246,7 +226,6 @@ app.post("/login", (req, res) => {
   });
 });
 
-// Operator Registration
 app.post("/operator-signup", (req, res) => {
   const { company_name, email, phone, password } = req.body;
 
@@ -254,7 +233,6 @@ app.post("/operator-signup", (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  // Check if operator exists
   const checkOp = "SELECT id FROM operators WHERE email = ?";
   db.query(checkOp, [email], (err, results) => {
     if (err) return res.status(500).json({ error: "Database error" });
@@ -268,7 +246,6 @@ app.post("/operator-signup", (req, res) => {
   });
 });
 
-// Operator Login
 app.post("/operator-login", (req, res) => {
   const { email, password } = req.body;
 
@@ -290,7 +267,6 @@ app.post("/operator-login", (req, res) => {
   });
 });
 
-// Add new bus endpoint
 app.post("/api/buses", (req, res) => {
   const {
     operator,
@@ -306,23 +282,18 @@ app.post("/api/buses", (req, res) => {
     return res.status(400).json({ success: false, error: "Missing required fields" });
   }
 
-  // Helper values
   const operator_short = operator.substring(0, 3).toUpperCase();
-  const operator_color = "#" + Math.floor(Math.random() * 16777215).toString(16); // Random color
+  const operator_color = "#" + Math.floor(Math.random() * 16777215).toString(16);
   const operator_text_color = "#ffffff";
   const bus_category = bus_type || "Classic";
 
-  // Calculate duration minutes
-  // Assumes duration format like "4h 30m" or "5h"
   let duration_minutes = 0;
   const hoursMatch = duration.match(/(\d+)h/);
   const minsMatch = duration.match(/(\d+)m/);
   if (hoursMatch) duration_minutes += parseInt(hoursMatch[1]) * 60;
   if (minsMatch) duration_minutes += parseInt(minsMatch[1]);
-  if (duration_minutes === 0) duration_minutes = 60; // Default fallback
+  if (duration_minutes === 0) duration_minutes = 60;
 
-  // Calculate arrival time
-  // Assumes departure_time is HH:MM (24h)
   const [depHours, depMins] = departure_time.split(':').map(Number);
   const totalDepMins = depHours * 60 + depMins;
   const totalArrMins = (totalDepMins + duration_minutes) % (24 * 60);
@@ -330,17 +301,16 @@ app.post("/api/buses", (req, res) => {
   const arrMinutes = totalArrMins % 60;
   const arrival_time = `${arrHours.toString().padStart(2, '0')}:${arrMinutes.toString().padStart(2, '0')}`;
 
-  // Calculate departure category
   let departure_time_category = 'Morning';
   if (depHours >= 0 && depHours < 6) departure_time_category = 'Night';
   else if (depHours >= 6 && depHours < 12) departure_time_category = 'Morning';
   else if (depHours >= 12 && depHours < 18) departure_time_category = 'Afternoon';
   else departure_time_category = 'Evening';
 
-  const seats_available = 45; // Default
+  const seats_available = 45;
   const stops = 0;
   const stop_details = "";
-  const amenities = "AC, WiFi, USB"; // Default
+  const amenities = "AC, WiFi, USB";
 
   const insertQuery = `
     INSERT INTO buses (
@@ -356,7 +326,7 @@ app.post("/api/buses", (req, res) => {
     operator, operator_short, operator_color, operator_text_color,
     bus_type, bus_category, from_location, to_location,
     departure_time, arrival_time, duration, duration_minutes,
-    stops, stop_details, price, price, // original_price same as price
+    stops, stop_details, price, price,
     seats_available, amenities, departure_time_category
   ];
 
@@ -369,14 +339,11 @@ app.post("/api/buses", (req, res) => {
   });
 });
 
-// Bus search API endpoint - queries from database
 app.get("/api/buses", (req, res) => {
   try {
-    // Build base query
     let query = "SELECT * FROM buses WHERE 1=1";
     const params = [];
 
-    // Filter by route
     if (req.query.from) {
       query += " AND from_location = ?";
       params.push(req.query.from);
@@ -387,7 +354,6 @@ app.get("/api/buses", (req, res) => {
       params.push(req.query.to);
     }
 
-    // Filter by departure time categories
     if (req.query.departureTime) {
       const timeCats = Array.isArray(req.query.departureTime)
         ? req.query.departureTime
@@ -396,7 +362,6 @@ app.get("/api/buses", (req, res) => {
       params.push(...timeCats);
     }
 
-    // Filter by bus type
     if (req.query.busType) {
       const types = Array.isArray(req.query.busType)
         ? req.query.busType
@@ -405,7 +370,6 @@ app.get("/api/buses", (req, res) => {
       params.push(...types);
     }
 
-    // Filter by price range
     if (req.query.minPrice) {
       query += " AND price >= ?";
       params.push(parseInt(req.query.minPrice));
@@ -416,7 +380,6 @@ app.get("/api/buses", (req, res) => {
       params.push(parseInt(req.query.maxPrice));
     }
 
-    // Filter by operators
     if (req.query.operators) {
       const operators = Array.isArray(req.query.operators)
         ? req.query.operators
@@ -430,7 +393,6 @@ app.get("/api/buses", (req, res) => {
       params.push(`%${req.query.operatorSearch}%`);
     }
 
-    // Add sorting
     const sortBy = req.query.sortBy || "cheapest";
     switch (sortBy) {
       case "cheapest":
@@ -447,17 +409,12 @@ app.get("/api/buses", (req, res) => {
         break;
     }
 
-    // Execute query
     db.query(query, params, (err, results) => {
       if (err) {
         console.error("Database query error:", err);
-        return res.status(500).json({
-          success: false,
-          error: "Error searching for buses"
-        });
+        return res.status(500).json({ success: false, error: "Error searching for buses" });
       }
 
-      // Format results to match frontend expectations
       const buses = results.map(bus => ({
         id: bus.id,
         operator: bus.operator,
@@ -481,23 +438,32 @@ app.get("/api/buses", (req, res) => {
         departureTimeCategory: bus.departure_time_category
       }));
 
-      res.json({
-        success: true,
-        count: buses.length,
-        buses: buses
-      });
+      res.json({ success: true, count: buses.length, buses: buses });
     });
 
   } catch (error) {
     console.error("Bus search error:", error);
-    res.status(500).json({
-      success: false,
-      error: "Error searching for buses"
-    });
+    res.status(500).json({ success: false, error: "Error searching for buses" });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server started on http://localhost:${PORT}`);
+app.post("/api/feedback", (req, res) => {
+  const { user_email, type, subject, message } = req.body;
+
+  if (!user_email || !type || !subject || !message) {
+    return res.status(400).json({ success: false, error: "All fields are required" });
+  }
+
+  const insertQuery = "INSERT INTO feedback (user_email, type, subject, message) VALUES (?, ?, ?, ?)";
+  db.query(insertQuery, [user_email, type, subject, message], (err, result) => {
+    if (err) {
+      console.error("Error submitting feedback:", err);
+      return res.status(500).json({ success: false, error: "Database error" });
+    }
+    res.json({ success: true, message: "Feedback submitted successfully" });
+  });
 });
 
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>User Profile &amp; Booking History - CamBus </title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --primary-color: #0da6f2;
+            --primary-rgb: 13, 166, 242;
+            --background-light: #f5f7f8;
+            --surface-light: #ffffff;
+            --text-dark: #0d171c;
+            --text-muted: #49819c;
+            --border-color: #e7eff4;
+            --success-color: #22c55e;
+            --warning-color: #eab308;
+            --danger-color: #ef4444;
+        }
+
+        /* Dark mode variables would go here if we were implementing a full toggle system manually, 
+           but for now we stick to the default light theme structure as base, 
+           preserving the clean look requested. */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 40px;
+            background-color: var(--surface-light);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            color: var(--primary-color);
+            font-size: 32px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXEFk8czWudDIzGfPv4wqKJ10YisvxhweV4jJGlcjfqnPFr-s-WdNFm6a6fC2Mm86T3qzt_HT6zTPPRi5OdByfUaRby2HgjpND8E1mfpM0BNVRsBNE5T36hkrXafvuVXIdSC0QWYZwA3Duo30Mc6FrXvHJ1Q8tEPJ1bFNDRay6bXKfDBzfaKwkZOIx3HqA_PPDyhiLraBaKynMhEPvcupY2bK3nFjnc5vs1Y5M3IS3hotHJjPl6_2IesH5CevTymR36LkqKMDAQMFS');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px 40px;
+            /* Default padding for larger screens */
+            display: flex;
+            gap: 32px;
+            flex: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                padding: 20px;
+            }
+        }
+
+        /* Sidebar */
+        aside {
+            width: 288px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1024px) {
+            aside {
+                width: 100%;
+            }
+        }
+
+        .sidebar-card {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 96px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .user-avatar-large {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBPiyUlPVFVqp9E7msjkKyi4I6HGT3EvBJlD2B3PpVRnWKacfusYgpr__8YrYoUJA-gsoeS6ffFZmcOWdKPx8E2UhUvMjS55eggjeiMgkRTZ07jFRKpwulGAR_HEs7_WfIoVM7IqnLesb5p_uScqVetpDK1y1b-jlaMB_aRvN3rX2KocZdZk_AbS_AFOEGARYsVFS2R6zdlSEZorDo0oYcWfkYEgWgA32RYa1wEKzjkVjtfVEo84prpi9rH1dtrTDWje64w9L6Q1cWT');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .user-info h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .user-info p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: var(--border-color);
+        }
+
+        .nav-item.active {
+            background-color: rgba(var(--primary-rgb), 0.1);
+        }
+
+        .nav-item .material-symbols-outlined {
+            color: var(--text-muted);
+            font-size: 24px;
+        }
+
+        .nav-item:hover .material-symbols-outlined {
+            color: var(--text-dark);
+        }
+
+        .nav-item.active .material-symbols-outlined {
+            color: var(--primary-color);
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .nav-item p {
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-item.active p {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .page-title h2 {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b8ecf;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 32px;
+            border-bottom: 1px solid #cee0e8;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 13px 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-muted);
+            /* Default color */
+            border-bottom: 3px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--text-dark);
+            border-bottom-color: var(--primary-color);
+        }
+
+     
+
+        .tab-btn:hover {
+            border-bottom-color: #cbd5e1;
+        }
+
+        /* Trip Cards */
+        .trips-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .trip-card {
+            background-color: var(--surface-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: border-color 0.2s;
+        }
+
+        .trip-card:hover {
+            border-color: rgba(var(--primary-rgb), 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .trip-card {
+                flex-direction: column;
+            }
+        }
+
+        .trip-image {
+            width: 192px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .trip-image {
+                width: 100%;
+                height: 128px;
+            }
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-confirmed {
+            background-color: var(--success-color);
+        }
+
+        .status-pending {
+            background-color: var(--warning-color);
+        }
+
+        .trip-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .trip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .trip-date {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            /* using text-muted to approximate the #49819c or similar */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .trip-route {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            /* allow wrapping on small screens */
+        }
+
+        .trip-operator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .operator-tag {
+            background-color: #eff6ff;
+            /* blue-50 */
+            color: #1d4ed8;
+            /* blue-700 */
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #dbeafe;
+        }
+
+        .operator-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            /* gray-800 */
+        }
+
+        .trip-details-text {
+            font-size: 14px;
+            color: #6b7280;
+            /* gray-500 */
+            margin-top: 2px;
+        }
+
+        .trip-price {
+            text-align: right;
+        }
+
+        .price-amount {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: #9ca3af;
+            /* gray-400 */
+        }
+
+        .trip-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #f0f4f7;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .trip-info {
+            display: flex;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-outline-danger {
+            border: 1px solid #fecaca;
+            /* red-200 */
+            color: var(--danger-color);
+            background: transparent;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #fef2f2;
+            /* red-50 */
+        }
+
+        .btn-outline-secondary {
+            border: 1px solid #e5e7eb;
+            /* gray-200 */
+            color: #374151;
+            /* gray-700 */
+            background: transparent;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline-secondary:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background-color: #e7eff4;
+            color: var(--text-dark);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Promo Box */
+        .promo-box {
+            margin-top: 32px;
+            padding: 32px;
+            border-radius: 12px;
+            background: linear-gradient(to right, rgba(var(--primary-rgb), 0.05), transparent);
+            border: 1px dashed rgba(var(--primary-rgb), 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .promo-icon {
+            background-color: white;
+            padding: 12px;
+            border-radius: 50%;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            color: var(--primary-color);
+        }
+
+        .promo-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .promo-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            max-width: 448px;
+            margin: 4px 0 16px 0;
+        }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-link:hover {
+            opacity: 0.8;
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+
+        .material-symbols-outlined {
+            font-size: 24px;
+            vertical-align: middle;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 24px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <span class="material-symbols-outlined logo-icon">directions_bus</span>
+            <span class="logo-text">CamBus</span>
+        </div>
+        <div class="nav-links">
+            <div class="desktop-links" style="display: flex; gap: 36px;">
+                <a href="#">Home</a>
+                <a href="#">Contact</a>
+                <a href="#" onclick="logout()">Log Out</a>
+            </div>
+            <div class="user-avatar-small"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside>
+            <div class="sidebar-card">
+                <div class="user-profile">
+                    <div class="user-avatar-large"></div>
+                    <div class="user-info">
+                        <h1 id="userNameDisplay">User</h1>
+                        <p id="userEmailDisplay">Member since Jan 2023</p>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item">
+                        <span class="material-symbols-outlined">account_circle</span>
+                        <p>My Profile</p>
+                    </a>
+                    <a href="#" class="nav-item active">
+                        <span class="material-symbols-outlined">confirmation_number</span>
+                        <p>My Bookings</p>
+                    </a>
+
+                    <a href="#" class="nav-item">
+                        <span class="material-symbols-outlined">settings</span>
+                        <p>Settings</p>
+                    </a>
+                    <div style="border-top: 1px solid var(--border-color); margin: 8px 0;"></div>
+                    <a href="#" class="nav-item" onclick="openFeedbackModal('Feedback')">
+                        <span class="material-symbols-outlined">feedback</span>
+                        <p>User Feedback</p>
+                    </a>
+                    <a href="#" class="nav-item" onclick="openFeedbackModal('Help')">
+                        <span class="material-symbols-outlined">help</span>
+                        <p>Help</p>
+                    </a>
+                </nav>
+
+            </div>
+        </aside>
+
+        <main>
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Your Trips</h2>
+                    <p>Manage your upcoming and past journeys across Cameroon.</p>
+                </div>
+                <button class="btn-primary" onclick="goToBookTrip()">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+                    Book New Trip
+                </button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active">Upcoming (2)</button>
+                <button class="tab-btn">Past</button>
+                <button class="tab-btn">Cancelled</button>
+            </div>
+
+            <div class="trips-container">
+
+                <div class="trip-card">
+                    <div class="trip-image"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCtiXAPZBjpcEDOj497wDwIx0rkipDLO5aLISc4AYeOgqFZiSqef0BIGMlqhd2851qU4_29Szg24jB8ofr5ECFkQWPSx-VcVsAEA11bL9_R9_2VncNfDXsz2IHFyh9KbQQi-MoP7n3wIth1MgoWy2TmxtDCEdOvGshcAN0eXdyF82AzN-ZSrxl0msVnbkovP-YXLJi7OXF2wVoNfcISuL_ZYIGxLmIJg2OGzEi-fjib66T7oDF5AFc_F27G_fHn4rh8peMcveMYsrlK');">
+                        <div class="status-badge status-confirmed">Confirmed</div>
+                    </div>
+                    <div class="trip-content">
+                        <div class="trip-header">
+                            <div>
+                                <div class="trip-date">Fri, Oct 24 • 08:00 AM</div>
+                                <div class="trip-route">
+                                    Yaoundé
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 18px; color: var(--text-muted);">arrow_forward</span>
+                                    Douala
+                                </div>
+                                <div class="trip-operator">
+                                    <span class="operator-tag">OPERATOR</span>
+                                    <span class="operator-name">General Express</span>
+                                </div>
+                                <div class="trip-details-text">VIP Bus • AC • PNR 837492</div>
+                            </div>
+                            <div class="trip-price">
+                                <div class="price-amount">XAF 6,500</div>
+                                <div class="price-label">per person</div>
+                            </div>
+                        </div>
+                        <div class="trip-footer">
+                            <div class="trip-info">
+                                <span class="info-item">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 16px;">airline_seat_recline_extra</span> Seat 12A
+                                </span>
+                                <span>•</span>
+                                <span class="info-item">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">schedule</span> 4h
+                                    30m
+                                </span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-outline-danger">Cancel</button>
+                                <button class="btn-outline-secondary">Reschedule</button>
+                                <button class="btn-secondary">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                                    Ticket
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="trip-card">
+                    <div class="trip-image"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAA02SyDRRe0bFpBtDepR-630hpQZJA1zwpUHtPmeKHlpyS9XTj9opLOfJ-mn8LZbXtj-dDN2az48TfaXbCtKVYDHKVozuZBrK-YBmq6rnAWQgpCxBd6Rm5ulkwliEFZZAVFPTkY0-DlyNyfkC7T3u3lzQqutdrn_fsx2i0Z7-8RQbbFEDMmRTniNWM3U1IpPFVuAA9h2hLD5YF6qtbZJAZr0lYbE-e9Ql4d9BoNA0Di_vzrdYFbRYfb7Vet1rtIhTBBC6nku9Z3x2l');">
+                        <div class="status-badge status-pending">Pending</div>
+                    </div>
+                    <div class="trip-content">
+                        <div class="trip-header">
+                            <div>
+                                <div class="trip-date">Mon, Nov 02 • 10:15 AM</div>
+                                <div class="trip-route">
+                                    Bamenda
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 18px; color: var(--text-muted);">arrow_forward</span>
+                                    Yaoundé
+                                </div>
+                                <div class="trip-operator">
+                                    <span class="operator-tag">OPERATOR</span>
+                                    <span class="operator-name">United Express</span>
+                                </div>
+                                <div class="trip-details-text">Standard Class • PNR 998210</div>
+                            </div>
+                            <div class="trip-price">
+                                <div class="price-amount">XAF 7,500</div>
+                                <div class="price-label">per person</div>
+                            </div>
+                        </div>
+                        <div class="trip-footer">
+                            <div class="trip-info">
+                                <span class="info-item">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 16px;">airline_seat_recline_normal</span> Seat 4B
+                                </span>
+                                <span>•</span>
+                                <span class="info-item">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">schedule</span> 6h
+                                    00m
+                                </span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-outline-danger">Cancel</button>
+                                <button class="btn-secondary">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 18px;">edit_calendar</span> Modify
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="promo-box">
+                <div class="promo-icon">
+                    <span class="material-symbols-outlined">explore</span>
+                </div>
+                <h3 class="promo-title">Planning another adventure?</h3>
+                <p class="promo-text">Check out our trending destinations for this season and get 10% off your next
+                    booking.</p>
+                <button class="btn-link" onclick="goToBookTrip()">
+                    Explore Destinations
+                    <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                </button>
+            </div>
+
+
+            <div id="feedbackModal" class="modal-overlay hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="feedbackModalTitle">User Feedback</h3>
+                        <button class="close-btn" onclick="closeFeedbackModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="feedbackSubject" placeholder="Brief summary" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea id="feedbackMessage" rows="4" placeholder="Describe your feedback or issue..."
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-secondary" onclick="closeFeedbackModal()">Cancel</button>
+                        <button class="btn-primary" onclick="submitFeedback()">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('name');
+            const userEmail = localStorage.getItem('email');
+
+            if (userName) {
+                document.getElementById('userNameDisplay').textContent = userName;
+            } else {
+                document.getElementById('userNameDisplay').textContent = 'Guest';
+            }
+
+            if (userEmail) {
+                document.getElementById('userEmailDisplay').textContent = userEmail;
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('name');
+            localStorage.removeItem('email');
+            window.location.href = '/login.html';
+        }
+
+
+        function goToBookTrip() {
+
+            window.location.href = '/bussearch.html';
+        }
+
+
+        let currentFeedbackType = 'Feedback';
+
+        function openFeedbackModal(type) {
+            currentFeedbackType = type;
+            document.getElementById('feedbackModalTitle').textContent = type === 'Help' ? 'Get Help' : 'User Feedback';
+            document.getElementById('feedbackModal').classList.remove('hidden');
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.add('hidden');
+            document.getElementById('feedbackSubject').value = '';
+            document.getElementById('feedbackMessage').value = '';
+        }
+
+        async function submitFeedback() {
+            const subject = document.getElementById('feedbackSubject').value;
+            const message = document.getElementById('feedbackMessage').value;
+            const userEmail = localStorage.getItem('email');
+
+            if (!userEmail) {
+                alert('You must be logged in to submit feedback.');
+                return;
+            }
+
+            if (!subject || !message) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_email: userEmail,
+                        type: currentFeedbackType,
+                        subject,
+                        message
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert('Thank you! Your feedback has been sent to the operator.');
+                    closeFeedbackModal();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error submitting feedback:', error);
+                alert('Failed to send feedback. Please try again.');
+            }
+        }
+    </script>
+</body>
+
+</html>
