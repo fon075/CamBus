@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CamBus - Booking Details</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.ticket-perforation-mask {
+            mask-image: radial-gradient(circle at center, transparent 10px, black 10px);
+            mask-position: -10px center;
+            mask-size: 20px 100%;
+            mask-repeat: no-repeat;
+        }@media print {
+            body * {
+                visibility: hidden;
+            }
+            .printable-ticket, .printable-ticket * {
+                visibility: visible;
+            }
+            .printable-ticket {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            header, .no-print {
+                display: none !important;
+            }
+            .bg-background-light {
+                background-color: white !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-white dark:bg-[#1a2c35] border-b border-gray-200 dark:border-gray-700 px-4 sm:px-10 py-3 no-print">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4 text-[#0d171c] dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-3xl">directions_bus</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">CamBus</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors text-primary" href="#">My Bookings</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+<div class="hidden sm:flex items-center gap-4">
+<button class="flex items-center justify-center rounded-full size-10 overflow-hidden bg-gray-200 dark:bg-gray-700">
+<img alt="User Avatar" class="size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB21fIP2UlS1kPAhg8Bu9HzrzIDGOuEFheor7xjtkjIFB_eRaUIswIXnff_smajaDZDBqypTRxYGucqA7CzmsgC4Fr7Hi-S6Dkd8tlTmwCNMaBGCxgfMpkEs2HiWkboeWtW3E4oOKRkCX5S2mrIkokhAoml57iWC1PDM3U11vBWmWBpGnC5lfXPHnvssv60hSMaSOCbyozyurBWzyjwCyDWA1kJ998ew7ReHHMrGP-rycqynmiqW_-77A2XFiQzz-wqZrIkVJP4bDS5"/>
+</button>
+</div>
+<button class="md:hidden text-gray-500 hover:text-gray-700">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center py-8 px-4 sm:px-6 w-full max-w-5xl mx-auto">
+<div class="w-full mb-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl font-bold tracking-tight text-[#0d171c] dark:text-white flex items-center gap-3 justify-center sm:justify-start">
+<span class="material-symbols-outlined text-green-500 text-4xl">check_circle</span>
+                Booking Confirmed!
+            </h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm sm:pl-12">
+                Your seat is reserved. Please present this ticket upon boarding.
+            </p>
+</div>
+<div class="flex gap-3 no-print">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">share</span>
+                Share
+            </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-sky-600 transition-colors shadow-sm shadow-sky-200 dark:shadow-none">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                Download PDF
+            </button>
+</div>
+</div>
+<div class="printable-ticket w-full bg-white dark:bg-[#15232b] rounded-2xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-gray-100 dark:border-gray-800">
+<div class="flex-1 p-6 sm:p-8 relative">
+<div class="flex flex-wrap justify-between items-start gap-4 mb-6 pb-6 border-b border-dashed border-gray-200 dark:border-gray-700">
+<div class="flex flex-col sm:flex-row gap-6 sm:gap-12">
+<div>
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Booking ID</p>
+<p class="text-lg font-bold font-mono text-slate-800 dark:text-slate-200">#YAO-DL-829</p>
+</div>
+<div>
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Operating Agency</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<p class="text-lg font-bold text-slate-800 dark:text-slate-200">General Express</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold uppercase tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                        Confirmed
+                    </span>
+<p class="text-xs text-slate-400 mt-1">Booked on 10 Nov 2023</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-8">
+<div class="text-center sm:text-left">
+<p class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">Yaoundé</p>
+<p class="text-sm font-medium text-slate-500 mt-1">Mvan Station</p>
+</div>
+<div class="flex flex-col items-center gap-1 w-full sm:w-auto">
+<div class="flex items-center w-full gap-2 opacity-50">
+<div class="h-[2px] w-full sm:w-16 bg-slate-300 dark:bg-slate-600"></div>
+<span class="material-symbols-outlined text-slate-400">directions_bus</span>
+<div class="h-[2px] w-full sm:w-16 bg-slate-300 dark:bg-slate-600"></div>
+</div>
+<p class="text-xs font-medium text-slate-400">4h 30m</p>
+</div>
+<div class="text-center sm:text-right">
+<p class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">Douala</p>
+<p class="text-sm font-medium text-slate-500 mt-1">Akwa Station</p>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 mb-8">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                        Date
+                    </div>
+<p class="text-base font-semibold text-slate-800 dark:text-slate-200">12 Nov 2023</p>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                        Departure
+                    </div>
+<p class="text-base font-semibold text-primary">08:00 AM</p>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">commute</span>
+                        Bus No
+                    </div>
+<p class="text-base font-semibold text-slate-800 dark:text-slate-200">GE-404 (VIP)</p>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">airline_seat_recline_extra</span>
+                        Seat(s)
+                    </div>
+<p class="text-base font-bold text-slate-800 dark:text-slate-200">A4, A5</p>
+</div>
+</div>
+<div class="bg-background-light dark:bg-[#1a2c35] rounded-xl p-4 border border-gray-100 dark:border-gray-700">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">group</span>
+                    Passengers
+                </p>
+<div class="flex flex-wrap gap-4">
+<div class="flex items-center gap-2 bg-white dark:bg-[#15232b] px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">person</span>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-slate-200">John Doe</span>
+<span class="text-xs text-slate-500">ID: 1129384</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-white dark:bg-[#15232b] px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">person</span>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Jane Doe</span>
+<span class="text-xs text-slate-500">ID: 2239405</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="relative hidden lg:flex flex-col items-center justify-center w-8">
+<div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] border-l-2 border-dashed border-gray-300 dark:border-gray-600 h-[90%] my-auto"></div>
+<div class="absolute -top-3 w-6 h-6 rounded-full bg-background-light dark:bg-background-dark shadow-inner"></div>
+<div class="absolute -bottom-3 w-6 h-6 rounded-full bg-background-light dark:bg-background-dark shadow-inner"></div>
+</div>
+<div class="relative flex lg:hidden items-center justify-between w-full h-8 overflow-hidden">
+<div class="w-4 h-4 rounded-full bg-background-light dark:bg-background-dark -ml-2 shadow-inner"></div>
+<div class="flex-1 border-t-2 border-dashed border-gray-300 dark:border-gray-600"></div>
+<div class="w-4 h-4 rounded-full bg-background-light dark:bg-background-dark -mr-2 shadow-inner"></div>
+</div>
+<div class="w-full lg:w-80 bg-slate-50 dark:bg-[#111c23] p-8 flex flex-col items-center justify-center text-center border-l-0 lg:border-l border-gray-100 dark:border-gray-800">
+<div class="bg-white p-3 rounded-xl shadow-sm mb-4">
+<img alt="QR code for ticket scanning containing booking ID" class="w-40 h-40 object-contain mix-blend-multiply dark:mix-blend-normal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG4KI_vSmFNTVWl5ws5EdAGcy5HaAaikb4wWE1I87bMxD3CTswJ_8UzGIdp_MOFvupRJLpMFglpyCcZyxMCLFINkGntspw2UUH8Dg7DzUtZ_iGMY2pdMjfnoqUMVSemj1knyUhsR85FLJfOzotO8XZx9UnklQ8XAx7QSJZhME2ePB8_7S8mKsvJfII7gtCMfDkUp6_nVa8B0TR1uVx4acrIqutprDSin6RGelekR9FwB3FDnnDbiZow78KwecxH7S510VLz52dUD7V"/>
+</div>
+<h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-1">Scan to Board</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 max-w-[200px]">Show this QR code to the bus conductor upon boarding.</p>
+<div class="mt-6 w-full pt-6 border-t border-gray-200 dark:border-gray-700">
+<div class="flex justify-between items-center text-sm mb-1">
+<span class="text-slate-500">Total Paid</span>
+<span class="font-bold text-slate-900 dark:text-white">6,500 XAF</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Method</span>
+<span class="font-medium text-slate-700 dark:text-slate-300">MTN MoMo</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex flex-wrap justify-center gap-4 w-full no-print">
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center gap-2 rounded-lg h-12 px-6 bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-200 border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:text-primary transition-all font-medium shadow-sm">
+<span class="material-symbols-outlined">print</span>
+            Print Ticket
+        </button>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center gap-2 rounded-lg h-12 px-6 bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-200 border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:text-primary transition-all font-medium shadow-sm">
+<span class="material-symbols-outlined">mail</span>
+            Email Ticket
+        </button>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center gap-2 rounded-lg h-12 px-6 bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-200 border border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:text-primary transition-all font-medium shadow-sm">
+<span class="material-symbols-outlined">help</span>
+            Need Help?
+        </button>
+</div>
+</main>
+<footer class="mt-auto py-8 text-center text-slate-400 dark:text-slate-600 text-sm no-print">
+<p>© 2023 CamBus. All rights reserved.</p>
+</footer>
+
+</body></html>
