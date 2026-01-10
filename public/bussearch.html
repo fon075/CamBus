@@ -56,11 +56,11 @@
     .logo-icon {
         width: 2rem;
         height: 2rem;
-        color: #0da6f2;
+        color: #007bff;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(13, 166, 242, 0.1);
+        background: rgba(0, 123, 255, 0.1);
         border-radius: 0.5rem;
     }
 
@@ -96,7 +96,7 @@
     }
 
     .nav-link:hover {
-        color: #0da6f2;
+        color: #007bff;
     }
 
     .user-section {
@@ -223,7 +223,7 @@
     .form-input:focus {
 
         border-color: transparent;
-        box-shadow: 0 0 0 2px #0da6f2;
+        box-shadow: 0 0 0 2px #007bff;
     }
 
     .swap-button {
@@ -235,7 +235,7 @@
         border-radius: 50%;
         background: #f5f7f8;
         border: 1px solid #cee0e8;
-        color: #0da6f2;
+        color: #007bff;
         cursor: pointer;
         transition: all 0.3s ease;
         margin-bottom: 0.25rem;
@@ -248,7 +248,7 @@
     }
 
     .swap-button:hover {
-        background: #0da6f2;
+        background: #007bff;
         color: white;
     }
 
@@ -266,7 +266,7 @@
         width: 100%;
         height: 3rem;
         padding: 0 2rem;
-        background: #0da6f2;
+        background: #007bff;
         color: white;
         font-weight: 700;
         border-radius: 0.5rem;
@@ -340,7 +340,7 @@
 
     .clear-button {
         font-size: 0.875rem;
-        color: #0da6f2;
+        color: #007bff;
         font-weight: 500;
         background: none;
         border: none;
@@ -387,11 +387,11 @@
     }
 
     .time-card:hover {
-        background: rgba(13, 166, 242, 0.05);
+        background: rgba(0, 123, 255, 0.05);
     }
 
     .time-card.active {
-        background: #0da6f2;
+        background: #007bff;
         color: white;
     }
 
@@ -403,7 +403,7 @@
 
     .time-card:hover .time-icon,
     .time-card.active .time-icon {
-        color: #0da6f2;
+        color: #007bff;
         transform: scale(1.1);
     }
 
@@ -435,7 +435,7 @@
     }
 
     .checkbox-item:hover .checkbox-label {
-        color: #0da6f2;
+        color: #007bff;
     }
 
     .checkbox-input {
@@ -443,7 +443,7 @@
         height: 1rem;
         border-radius: 0.25rem;
         border: 1px solid #d1d5db;
-        color: #0da6f2;
+        color: #007bff;
         cursor: pointer;
     }
 
@@ -460,14 +460,14 @@
         border-radius: 0.5rem;
         appearance: none;
         cursor: pointer;
-        accent-color: #0da6f2;
+        accent-color: #007bff;
     }
 
     .price-slider::-webkit-slider-thumb {
         appearance: none;
         width: 1.25rem;
         height: 1.25rem;
-        background: #0da6f2;
+        background: #007bff;
         border-radius: 50%;
         cursor: pointer;
     }
@@ -586,14 +586,14 @@
     }
 
     .bus-card.featured {
-        border: 1px solid rgba(13, 166, 242, 0.2);
+        border: 1px solid rgba(0, 123, 255, 0.2);
     }
 
     .featured-badge {
         position: absolute;
         top: 0;
         left: 0;
-        background: #0da6f2;
+        background: #007bff;
         color: white;
         font-size: 0.625rem;
         font-weight: 700;
@@ -787,7 +787,7 @@
         display: block;
         font-size: 1.5rem;
         font-weight: 700;
-        color: #0da6f2;
+        color: #007bff;
     }
 
     .seats-available {
@@ -804,7 +804,7 @@
         width: 100%;
         padding: 0 1.5rem;
         height: 2.5rem;
-        background: #0da6f2;
+        background: #007bff;
         color: white;
         font-size: 0.875rem;
         font-weight: 700;
@@ -827,12 +827,12 @@
 
     .select-button.outline {
         background: transparent;
-        border: 1px solid #0da6f2;
-        color: #0da6f2;
+        border: 1px solid #007bff;
+        color: #007bff;
     }
 
     .select-button.outline:hover {
-        background: rgba(13, 166, 242, 0.05);
+        background: rgba(0, 123, 255, 0.05);
     }
 
     .bus-card-footer {
@@ -859,20 +859,20 @@
     }
 
     .footer-link:hover {
-        color: #0da6f2;
+        color: #007bff;
     }
 
     .footer-link.primary {
-        color: #0da6f2;
+        color: #007bff;
     }
 
     .load-more {
         margin-top: 1rem;
         width: 100%;
         padding: 0.75rem;
-        color: #0da6f2;
+        color: #007bff;
         font-weight: 700;
-        border: 2px dashed rgba(13, 166, 242, 0.3);
+        border: 2px dashed rgba(0, 123, 255, 0.3);
         border-radius: 0.75rem;
         background: none;
         cursor: pointer;
@@ -880,7 +880,7 @@
     }
 
     .load-more:hover {
-        background: rgba(13, 166, 242, 0.05);
+        background: rgba(0, 123, 255, 0.05);
     }
 
     /* Footer */
@@ -944,10 +944,8 @@
     <header class="navbar">
         <div class="navbar-container">
             <div class="logo-section">
-                <div class="logo-icon">
-                    <span class="material-symbols-outlined">directions_bus</span>
-                </div>
-                <h2 class="logo-text">CamBus</h2>
+                <h1 class="logo" style="font-size: 1.5rem; font-weight: 800; color: #1a1a1a;">Cam<i class="fas fa-bus"
+                        style="color: #007bff; margin: 0 4px;"></i>Bus</h1>
             </div>
             <nav class="nav-menu">
                 <a class="nav-link" href="#">My Trips</a>
@@ -1061,24 +1059,12 @@
                     </div>
                 </div>
                 <div class="filter-section">
-                    <h4 class="filter-section-title">Operators</h4>
-                    <div class="operator-list">
-                        <label class="checkbox-item">
-                            <input class="checkbox-input" type="checkbox" checked />
-                            <span class="checkbox-label">Finexs Voyages</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input class="checkbox-input" type="checkbox" />
-                            <span class="checkbox-label">Touristique Express</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input class="checkbox-input" type="checkbox" checked />
-                            <span class="checkbox-label">General Express</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input class="checkbox-input" type="checkbox" />
-                            <span class="checkbox-label">Buca Voyages</span>
-                        </label>
+                    <h4 class="filter-section-title">Search Operator</h4>
+                    <div class="input-wrapper" style="position: relative;">
+                        <span class="material-symbols-outlined"
+                            style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #49819c; font-size: 1.25rem;">search</span>
+                        <input class="form-input" type="text" id="operatorSearch" placeholder="Operator name..."
+                            style="padding-left: 2.75rem; height: 2.75rem; font-size: 0.875rem;" />
                     </div>
                 </div>
             </aside>
@@ -1098,233 +1084,27 @@
                     </div>
                 </div>
 
-                <!-- Bus Card 1 - Featured -->
-                <div class="bus-card featured">
-                    <div class="featured-badge">Fastest</div>
-                    <div class="bus-card-content">
-                        <div class="bus-operator">
-                            <div class="operator-info">
-                                <div class="operator-logo" style="background: #dbeafe; color: #1d4ed8;">
-                                    FV
-                                </div>
-                                <div class="operator-details">
-                                    <h4>Finexs Voyages</h4>
-                                    <p>VIP Prestige</p>
-                                </div>
-                            </div>
-                            <div class="amenities">
-                                <span class="material-symbols-outlined" title="WiFi">wifi</span>
-                                <span class="material-symbols-outlined" title="Power Outlet">electrical_services</span>
-                                <span class="material-symbols-outlined" title="Water Bottle">water_drop</span>
-                                <span class="material-symbols-outlined" title="Tracking">location_on</span>
-                            </div>
-                        </div>
-                        <div class="bus-journey">
-                            <div class="journey-times">
-                                <div class="journey-time">
-                                    <span class="time">08:00</span>
-                                    <span class="location">Douala</span>
-                                </div>
-                                <div class="journey-line">
-                                    <span class="duration">4h 15m</span>
-                                    <div class="line">
-                                        <div class="line-dot"></div>
-                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
-                                        <div class="line-dot"></div>
-                                    </div>
-                                    <span class="stop-info">Non-stop</span>
-                                </div>
-                                <div class="journey-time end">
-                                    <span class="time">12:15</span>
-                                    <span class="location">Yaoundé</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bus-pricing">
-                            <div class="price-info">
-                                <span class="original-price">5,500 XAF</span>
-                                <span class="current-price">4,500 XAF</span>
-                                <span class="seats-available">12 Seats Left</span>
-                            </div>
-                            <button class="select-button">
-                                Select Seats
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bus-card-footer">
-                        <button class="footer-link primary">
-                            Amenities <span class="material-symbols-outlined"
-                                style="font-size: 0.875rem;">keyboard_arrow_down</span>
-                        </button>
-                        <button class="footer-link">
-                            Boarding & Dropping Points
-                        </button>
-                        <button class="footer-link">
-                            Cancellation Policy
-                        </button>
-                    </div>
+                <div id="loading-spinner" style="padding: 3rem; text-align: center; color: #49819c; display: none;">
+                    <span class="material-symbols-outlined"
+                        style="font-size: 3rem; display: block; margin-bottom: 1rem; animation: spin 2s linear infinite;">sync</span>
+                    <p>Searching for buses...</p>
                 </div>
 
-                <!-- Bus Card 2 -->
-                <div class="bus-card">
-                    <div class="bus-card-content">
-                        <div class="bus-operator">
-                            <div class="operator-info">
-                                <div class="operator-logo" style="background: #fef3c7; color: #a16207;">
-                                    TE
-                                </div>
-                                <div class="operator-details">
-                                    <h4>Touristique</h4>
-                                    <p>Comfort Plus</p>
-                                </div>
-                            </div>
-                            <div class="amenities">
-                                <span class="material-symbols-outlined">wifi</span>
-                                <span class="material-symbols-outlined">electrical_services</span>
-                                <span class="material-symbols-outlined">airline_seat_recline_extra</span>
-                            </div>
-                        </div>
-                        <div class="bus-journey">
-                            <div class="journey-times">
-                                <div class="journey-time">
-                                    <span class="time">09:30</span>
-                                    <span class="location">Douala</span>
-                                </div>
-                                <div class="journey-line">
-                                    <span class="duration">4h 45m</span>
-                                    <div class="line">
-                                        <div class="line-dot"></div>
-                                        <div class="line-dot"
-                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
-                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
-                                        <div class="line-dot"
-                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
-                                        <div class="line-dot"></div>
-                                    </div>
-                                    <span class="stop-info">1 Stop (Edea)</span>
-                                </div>
-                                <div class="journey-time end">
-                                    <span class="time">14:15</span>
-                                    <span class="location">Yaoundé</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bus-pricing">
-                            <div class="price-info">
-                                <span class="current-price">3,500 XAF</span>
-                                <span class="seats-available seats-filling">Filling Fast</span>
-                            </div>
-                            <button class="select-button outline">
-                                View Seats
-                            </button>
-                        </div>
-                    </div>
+                <div id="bus-results-container" style="transition: opacity 0.3s ease;">
+                    <!-- Dynamic results will be injected here -->
                 </div>
 
-                <!-- Bus Card 3 -->
-                <div class="bus-card">
-                    <div class="bus-card-content">
-                        <div class="bus-operator">
-                            <div class="operator-info">
-                                <div class="operator-logo" style="background: #f3e8ff; color: #6b21a8;">
-                                    GE
-                                </div>
-                                <div class="operator-details">
-                                    <h4>General Express</h4>
-                                    <p>Business Class</p>
-                                </div>
-                            </div>
-                            <div class="amenities">
-                                <span class="material-symbols-outlined">wifi</span>
-                                <span class="material-symbols-outlined">airline_seat_recline_extra</span>
-                            </div>
-                        </div>
-                        <div class="bus-journey">
-                            <div class="journey-times">
-                                <div class="journey-time">
-                                    <span class="time">11:00</span>
-                                    <span class="location">Douala</span>
-                                </div>
-                                <div class="journey-line">
-                                    <span class="duration">5h 15m</span>
-                                    <div class="line">
-                                        <div class="line-dot"></div>
-                                        <div class="line-dot"
-                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
-                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
-                                        <div class="line-dot"
-                                            style="width: 0.25rem; height: 0.25rem; background: #d1d5db;"></div>
-                                        <div class="line-dot"></div>
-                                    </div>
-                                    <span class="stop-info">2 Stops</span>
-                                </div>
-                                <div class="journey-time end">
-                                    <span class="time">16:15</span>
-                                    <span class="location">Yaoundé</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bus-pricing">
-                            <div class="price-info">
-                                <span class="current-price">5,000 XAF</span>
-                                <span class="seats-available">20 Seats Left</span>
-                            </div>
-                            <button class="select-button outline">
-                                View Seats
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <style>
+                    @keyframes spin {
+                        from {
+                            transform: rotate(0deg);
+                        }
 
-                <!-- Bus Card 4 -->
-                <div class="bus-card">
-                    <div class="bus-card-content">
-                        <div class="bus-operator">
-                            <div class="operator-info">
-                                <div class="operator-logo" style="background: #fee2e2; color: #991b1b;">
-                                    BV
-                                </div>
-                                <div class="operator-details">
-                                    <h4>Buca Voyages</h4>
-                                    <p>Classic</p>
-                                </div>
-                            </div>
-                            <div class="amenities">
-                                <span class="material-symbols-outlined">wifi</span>
-                            </div>
-                        </div>
-                        <div class="bus-journey">
-                            <div class="journey-times">
-                                <div class="journey-time">
-                                    <span class="time">14:00</span>
-                                    <span class="location">Douala</span>
-                                </div>
-                                <div class="journey-line">
-                                    <span class="duration">4h 30m</span>
-                                    <div class="line">
-                                        <div class="line-dot"></div>
-                                        <span class="material-symbols-outlined line-icon">directions_bus</span>
-                                        <div class="line-dot"></div>
-                                    </div>
-                                    <span class="stop-info">Non-stop</span>
-                                </div>
-                                <div class="journey-time end">
-                                    <span class="time">18:30</span>
-                                    <span class="location">Yaoundé</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bus-pricing">
-                            <div class="price-info">
-                                <span class="current-price">4,000 XAF</span>
-                                <span class="seats-available">8 Seats Left</span>
-                            </div>
-                            <button class="select-button outline">
-                                View Seats
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                        to {
+                            transform: rotate(360deg);
+                        }
+                    }
+                </style>
 
                 <button class="load-more">
                     Load More Buses
@@ -1354,7 +1134,7 @@
                 busType: [],
                 minPrice: 2000,
                 maxPrice: 25000,
-                operators: []
+                operatorSearch: ''
             },
             sortBy: 'cheapest',
             buses: [],
@@ -1373,6 +1153,19 @@
         const clearAllButton = document.querySelector('.clear-button');
         const loadMoreButton = document.querySelector('.load-more');
         const priceSlider = document.querySelector('.price-slider');
+
+        // Debounce helper
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
@@ -1404,23 +1197,18 @@
                 }
             });
 
-            // Price range slider
-            priceSlider.addEventListener('input', function () {
+            // Price range slider (debounced)
+            priceSlider.addEventListener('input', debounce(function () {
                 state.filters.maxPrice = parseInt(this.value);
                 performSearch();
-            });
+            }, 300));
 
-            // Operator filters
-            document.querySelectorAll('.operator-list .checkbox-input').forEach((checkbox, index) => {
-                const operators = ['Finexs Voyages', 'Touristique Express', 'General Express', 'Buca Voyages'];
-                checkbox.addEventListener('change', () => {
-                    updateOperatorFilter(operators[index], checkbox.checked);
-                });
-                // Initialize checked filters
-                if (checkbox.checked) {
-                    updateOperatorFilter(operators[index], true);
-                }
-            });
+            // Operator search input (debounced)
+            const operatorSearchInput = document.getElementById('operatorSearch');
+            operatorSearchInput.addEventListener('input', debounce(function () {
+                state.filters.operatorSearch = this.value;
+                performSearch();
+            }, 500));
 
             // Sort select
             sortSelect.addEventListener('change', function () {
@@ -1469,7 +1257,7 @@
                     busType: [],
                     minPrice: 2000,
                     maxPrice: 25000,
-                    operators: []
+                    operatorSearch: ''
                 };
                 performSearch();
             });
@@ -1503,19 +1291,14 @@
             performSearch();
         }
 
-        function updateOperatorFilter(operator, checked) {
-            if (checked) {
-                if (!state.filters.operators.includes(operator)) {
-                    state.filters.operators.push(operator);
-                }
-            } else {
-                state.filters.operators = state.filters.operators.filter(o => o !== operator);
-            }
-            performSearch();
-        }
-
         // Perform search API call
         async function performSearch() {
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const container = document.getElementById('bus-results-container');
+
+            if (loadingSpinner) loadingSpinner.style.display = 'block';
+            if (container) container.style.opacity = '0.5';
+
             try {
                 // Build query string
                 const params = new URLSearchParams({
@@ -1537,10 +1320,8 @@
                     });
                 }
 
-                if (state.filters.operators.length > 0) {
-                    state.filters.operators.forEach(op => {
-                        params.append('operators', op);
-                    });
+                if (state.filters.operatorSearch) {
+                    params.append('operatorSearch', state.filters.operatorSearch);
                 }
 
                 params.append('minPrice', state.filters.minPrice);
@@ -1557,29 +1338,35 @@
                 }
             } catch (error) {
                 console.error('Search error:', error);
-                resultsTitle.innerHTML = `<span style="color: #ef4444;">Error loading buses. Please try again.</span>`;
+                if (resultsTitle) resultsTitle.innerHTML = `<span style="color: #ef4444;">Error loading buses. Please try again.</span>`;
+            } finally {
+                if (loadingSpinner) loadingSpinner.style.display = 'none';
+                if (container) container.style.opacity = '1';
             }
         }
 
         function updateResultsHeader(count) {
-            resultsTitle.innerHTML = `${count} Buses found <span class="results-subtitle">${state.from} to ${state.to}</span>`;
+            if (resultsTitle) {
+                resultsTitle.innerHTML = `${count} Buses found <span class="results-subtitle">${state.from} to ${state.to}</span>`;
+            }
         }
 
         function renderBuses(buses) {
-            // Get container (results section)
-            const container = document.querySelector('.results-section');
+            // Get specific results container
+            const container = document.getElementById('bus-results-container');
+            if (!container) return;
 
-            // Remove old bus cards
-            document.querySelectorAll('.bus-card').forEach(card => card.remove());
+            // Remove old content
+            container.innerHTML = '';
             loadMoreButton.remove();
 
             if (buses.length === 0) {
                 const noResults = document.createElement('div');
-                noResults.style.cssText = 'padding: 3rem; text-align: center; color: #49819c;';
+                noResults.style.cssText = 'padding: 4rem 2rem; text-align: center; color: #49819c; background: #fff; border-radius: 12px; border: 1px dashed #cee0e8;';
                 noResults.innerHTML = `
-                    <span class="material-symbols-outlined" style="font-size: 3rem; display: block; margin-bottom: 1rem; opacity: 0.5;">search_off</span>
-                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">No buses found</h3>
-                    <p>Try adjusting your filters or search criteria</p>
+                    <span class="material-symbols-outlined" style="font-size: 3.5rem; display: block; margin-bottom: 1rem; opacity: 0.3;">search_off</span>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">No buses found</h3>
+                    <p style="font-size: 0.875rem;">Try searching for a different operator or adjusting your destination.</p>
                 `;
                 container.appendChild(noResults);
                 return;
@@ -1592,12 +1379,15 @@
                 container.appendChild(card);
             });
 
-            // Re-add load more button if there are more buses
+            // Re-add load more button to the main results section parent if needed
+            const resultsSection = document.querySelector('.results-section');
             if (state.displayLimit < buses.length) {
-                container.appendChild(loadMoreButton);
+                resultsSection.appendChild(loadMoreButton);
                 loadMoreButton.textContent = `Load More Buses (${buses.length - state.displayLimit} remaining)`;
-            } else {
-                container.appendChild(loadMoreButton);
+                loadMoreButton.style.opacity = '1';
+                loadMoreButton.style.cursor = 'pointer';
+            } else if (buses.length > 0) {
+                resultsSection.appendChild(loadMoreButton);
                 loadMoreButton.textContent = 'No more buses to load';
                 loadMoreButton.style.opacity = '0.5';
                 loadMoreButton.style.cursor = 'not-allowed';

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Registration | CamBus Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007bff;
+            --primary-hover: #0056b3;
+            --bg-dark: #eef4ff;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #1a1a1a;
+            --text-dim: #64748b;
+            --accent: #007bff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            padding: 40px 20px;
+        }
+
+        .signup-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+        }
+
+        .logo i {
+            color: var(--primary);
+            margin: 0 4px;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            transition: color 0.3s;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-group input:focus+i {
+            color: var(--primary);
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 24px;
+        }
+
+        .btn-signup:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 123, 255, 0.3);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        .footer-note a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .error-msg {
+            background: #fee2e2;
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            display: none;
+            border: 1px solid #fecaca;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-card">
+        <div class="header">
+            <div class="logo">
+                Cam<i class="fas fa-bus"></i>Bus
+            </div>
+            <h2>Register Company</h2>
+            <p>Join Cameroon's largest digital transport network.</p>
+        </div>
+
+        <div id="errorMsg" class="error-msg">
+            <i class="fas fa-circle-exclamation"></i>
+            <span id="errorText">An error occurred during registration.</span>
+        </div>
+
+        <form id="signupForm">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>Company Display Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-building"></i>
+                        <input type="text" id="company_name" placeholder="e.g. General Express Travel" required>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label>Business Email</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="contact@company.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="phone" placeholder="+237 ..." required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Dashboard Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn-signup">Create Operator Account</button>
+        </form>
+
+        <div class="footer-note">
+            Already have an account? <a href="operator-login.html">Sign in here</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const company_name = document.getElementById('company_name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const errorText = document.getElementById('errorText');
+            const btn = e.target.querySelector('button');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+            try {
+                const response = await fetch('/operator-signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ company_name, email, phone, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Registration successful! Please login to your dashboard.');
+                    window.location.href = 'operator-login.html';
+                } else {
+                    errorText.textContent = data.error || 'Registration failed';
+                    errorMsg.style.display = 'flex';
+                }
+            } catch (err) {
+                errorText.textContent = 'Connection error. Please try again.';
+                errorMsg.style.display = 'flex';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Create Operator Account';
+            }
+        });
+    </script>
+</body>
+
+</html>

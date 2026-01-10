@@ -109,6 +109,47 @@ db.connect((err) => {
       console.log("✅ Buses table ready");
     }
   });
+
+  // Create operators table if it doesn't exist
+  const createOperatorsTable = `
+    CREATE TABLE IF NOT EXISTS operators (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      company_name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) UNIQUE NOT NULL,
+      phone VARCHAR(20) NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  db.query(createOperatorsTable, (err) => {
+    if (err) {
+      console.error("❌ Error creating operators table:", err.message);
+    } else {
+      console.log("✅ Operators table ready");
+    }
+  });
+
+  // Create customer_support table if it doesn't exist
+  const createSupportTable = `
+    CREATE TABLE IF NOT EXISTS customer_support (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      operator_id INT,
+      subject VARCHAR(255) NOT NULL,
+      message TEXT NOT NULL,
+      status VARCHAR(20) DEFAULT 'open',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (operator_id) REFERENCES operators(id) ON DELETE CASCADE
+    )
+  `;
+
+  db.query(createSupportTable, (err) => {
+    if (err) {
+      console.error("❌ Error creating support table:", err.message);
+    } else {
+      console.log("✅ Customer support table ready");
+    }
+  });
 });
 
 // Static routes
@@ -201,6 +242,50 @@ app.post("/login", (req, res) => {
       }
     } else {
       return res.status(401).json({ error: "Invalid email or password" });
+    }
+  });
+});
+
+// Operator Registration
+app.post("/operator-signup", (req, res) => {
+  const { company_name, email, phone, password } = req.body;
+
+  if (!company_name || !email || !phone || !password) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  // Check if operator exists
+  const checkOp = "SELECT id FROM operators WHERE email = ?";
+  db.query(checkOp, [email], (err, results) => {
+    if (err) return res.status(500).json({ error: "Database error" });
+    if (results.length > 0) return res.status(400).json({ error: "Email already registered" });
+
+    const insert = "INSERT INTO operators (company_name, email, phone, password) VALUES (?,?,?,?)";
+    db.query(insert, [company_name, email, phone, password], (err, result) => {
+      if (err) return res.status(500).json({ error: "Error creating operator account" });
+      res.json({ success: true, name: company_name, email });
+    });
+  });
+});
+
+// Operator Login
+app.post("/operator-login", (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) return res.status(400).json({ error: "Email and password required" });
+
+  db.query("SELECT * FROM operators WHERE email = ?", [email], (err, results) => {
+    if (err) return res.status(500).json({ error: "Database error" });
+
+    if (results.length > 0 && results[0].password === password) {
+      res.json({
+        success: true,
+        name: results[0].company_name,
+        email: results[0].email,
+        id: results[0].id
+      });
+    } else {
+      res.status(401).json({ error: "Invalid credentials" });
     }
   });
 });
@@ -338,6 +423,11 @@ app.get("/api/buses", (req, res) => {
         : [req.query.operators];
       query += " AND operator IN (" + operators.map(() => '?').join(',') + ")";
       params.push(...operators);
+    }
+
+    if (req.query.operatorSearch) {
+      query += " AND operator LIKE ?";
+      params.push(`%${req.query.operatorSearch}%`);
     }
 
     // Add sorting
